@@ -19,46 +19,49 @@ const dailyTrakerSchema = new Schema({
   exercise: Number,
 })
 
-function calculateSleepTotal(startHr, startMin, endHr, endMin) {
-  let calculatedSleepTotal;
-
-  if (startHr > endHr) {
-    // eg. 22 > 6
-    // eg. 22:30 > 6:15
-    calculatedSleepTotal =
-      24 - (startHr + startMin / 60) + (endHr + endMin / 60);
-  } else if (startHr < endHr) {
-    // eg. 0 < 7
-    calculatedSleepTotal = endHr + endMin / 60 - (startHr + startMin / 60);
-  } else {
-    // eg. slept @ 6, woke up @6:30
-    calculatedSleepTotal = endMin / 60 - startMin / 60;
-  }
-
-  calculatedSleepTotal = calculatedSleepTotal.toFixed(2);
-  return calculatedSleepTotal;
-}
-
-// VIRTUALS
-
-
-dailyTrakerSchema.virtual('sleepTotal').get(function() {
-  let sleepTotal = calculateSleepTotal(
-    this.sleepStartHr,
-    this.sleepStartMin,
-    this.sleepEndHr,
-    this.sleepEndMin
-  );
-  return sleepTotal;
-});
+//function calculateSleepTotal(startHr, startMin, endHr, endMin) {
+//  let calculatedSleepTotal;
+//
+//  if (startHr > endHr) {
+//    // eg. 22 > 6
+//    // eg. 22:30 > 6:15
+//    calculatedSleepTotal =
+//      24 - (startHr + startMin / 60) + (endHr + endMin / 60);
+//  } else if (startHr < endHr) {
+//    // eg. 0 < 7
+//    calculatedSleepTotal = endHr + endMin / 60 - (startHr + startMin / 60);
+//  } else {
+//    // eg. slept @ 6, woke up @6:30
+//    calculatedSleepTotal = endMin / 60 - startMin / 60;
+//  }
+//
+//  calculatedSleepTotal = calculatedSleepTotal.toFixed(2);
+//  return calculatedSleepTotal;
+//}
+//
+//// VIRTUALS
+//
+//
+//dailyTrakerSchema.virtual('sleepTotal').get(function() {
+//  let sleepTotal = calculateSleepTotal(
+//    this.sleepStartHr,
+//    this.sleepStartMin,
+//    this.sleepEndHr,
+//    this.sleepEndMin
+//  );
+//  return sleepTotal;
+//});
 
 // SERIALIZE
 
 dailyTrakerSchema.methods.serialize = function() {
   return {
     id: this._id,
-    dateAdjusted: this.dateAdjusted,
-    sleepTotal: this.sleepTotal,
+    date: this.date,
+    sleepStartHr: this.sleepStartHr,
+    sleepStartMin: this.sleepStartMin,
+    sleepEndHr: this.sleepEndHr,
+    sleepEndMin: this.sleepEndMin,
     stress: this.stress,
     gratidude: this.gratidude,
     energy: this.energy,
@@ -66,8 +69,8 @@ dailyTrakerSchema.methods.serialize = function() {
     waterIntake: this.waterIntake,
     cleanEating: this.cleanEating,
     exercise: this.exercise,
+    }
   };
-};
 
 
 const Log = mongoose.model('Log', dailyTrakerSchema);
