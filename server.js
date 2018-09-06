@@ -35,25 +35,22 @@ app.post('/logs', (req, res) => {
     return res.status(400).send(message);
   }
 
-  const toUpdate = {};
-  const updateableFields = [
-    'date',
-    'stress',
-    'waterIntake',
-  ];
-
-  updateableFields.forEach(field => {
-    if (field in req.body) {
-      toUpdate[field] = req.body[field];
+    Log.find({ date: date }).then(log => {
+    if (log.length !== 0) {
+      return res.status(400).send('A log with this date already exists');
+    } else {
+      Log.create({
+        date: req.body.date,
+        stress: req.body.stress,
+        waterIntake: req.body.waterIntake
+      });
+        .then(log => res.status(201).json(log.serialize()))
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({ message: 'Internal server error' });
+        });
     }
   });
-
-  Log.findByIdAndUpdate(req.params.id, { $set: toUpdate })
-    .then(log => res.status(204).end())
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ message: 'Internal server error' });
-    });
 });
     
 
