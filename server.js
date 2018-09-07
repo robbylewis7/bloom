@@ -10,54 +10,133 @@ const {PORT, DATABASE_URL} = require('./config');
 const {Log} = require('./models');
 
 app.use(express.static('public'));
+
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.status(200);
-  res.json('test');
-});
 
+
+app.get('/logs', (req, res) => {
+      Log.find()
+        .limit(5)
+//        .sort({ date: -1 })
+        .then(logs => {
+            res.status(200).json({
+            logs: logs.map(log => log.serialize())
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+};
 
 
 app.post('/logs', (req, res) => {
-   
-    const requiredFields = ['date', 'stress', 'waterIntake'];
-    for (let i = 0; i < requiredFields.length; i++) {
-        const field = requiredFields[i];
-        if (!(field in req.body)) {
-            const message = `Missing \`${field}\` in request body`;
-            console.error(message);
-            return res.status(400).send(message);
+
+  const requiredFields = ['date', 'waterIntake', 'exercise', 'sleepStartHr'];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`;
+      console.error(message);
+      return res.status(400).send(message);
     }
   }
-    
-      if (missingError) {
-    return res.status(400).send(message);
-  }
 
-    Log.find({ date: date }).then(log => {
+Log.find({ date: date }).then(log => {
     if (log.length !== 0) {
       return res.status(400).send('A log with this date already exists');
     } else {
-      Log.create({
-        date: req.body.date,
-        stress: req.body.stress,
-        waterIntake: req.body.waterIntake
-      });
+      Log
+        .create({
+            date: req.body.date,
+            stress: req.body.stress,
+            gratitude: req.body.gratitude,
+            energy: req.body.energy,
+            communityFeeling: req.body.communityFeeling,
+            waterIntake: req.body.waterIntake,
+            cleanEating: req.body.cleanEating,
+            exercise: req.body.exercise,
+            sleepStartHr: req.body.sleepStartHr,
+            sleepStartMin: req.body.sleepStartMin,
+            sleepEndHr: req.body.sleepEndHr,
+            sleepEndMin: req.body.sleepEndMin,
+      })
         .then(log => res.status(201).json(log.serialize()))
         .catch(err => {
           console.error(err);
           res.status(500).json({ message: 'Internal server error' });
-        });
+       });
+    });
+    
+    
+app.put('/logs/:id', (req, res) => {
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    const message =
+      `Request path id (${req.params.id}) and request body id ` +
+      `(${req.body.id}) must match`;
+    console.error(message);
+    return res.status(400).json({ message: message });
+  }
+     const requiredFields = ['date'];
+        let message;
+        let missingError = false;
+
+  requiredFields.forEach(field => {
+    if (empty(req.body[field])) {
+      message = `Missing \`${field}\` value in request body`;
+      console.error(message);
+      missingError = true;
+      return;
     }
   });
+
+  if (missingError) {
+    return res.status(400).send(message);
+  }
+
+  const toUpdate = {};
+  const updateableFields = [
+    'date',
+    'sleepStartHr',
+    'sleepStartMin',
+    'sleepEndHr',
+    'sleepEndMin',
+    'stress',
+    'gratitude',
+    'energy',
+    'communityFeeling',
+    'waterIntake',
+    'cleanEating',
+    'exercise'
+  ];
+      
+  updateableFields.forEach(field => {
+    if (field in req.body) {
+      toUpdate[field] = req.body[field];
+    }
+  });
+      Log.findByIdAndUpdate(req.params.id, { $set: toUpdate })
+    .then(log => res.status(204).end())
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
 });
     
+    
+app.delete('/logs/:id', (req, res) => {
+  Log.findByIdAndRemove(req.params.id)
+    .then(log => res.status(204).end())
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
 
-
-
-
-
+app.use('*', function(req, res) {
+  res.status(404).json({ message: 'Not Found' });
+});
 
 
 
@@ -98,6 +177,8 @@ function closeServer() {
     });
   });
 }
+
+
 
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
