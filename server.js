@@ -15,6 +15,23 @@ app.use(express.json());
 
 
 
+
+
+
+//////////////////
+//End-Points
+//////////////////
+
+
+
+
+app.get('/', (req, res) => {
+  res.status(200);
+  res.sendFile('index.html', { root: './public' });
+});
+
+
+
 app.get('/logs', (req, res) => {
       Log.find()
         .limit(5)
@@ -28,7 +45,9 @@ app.get('/logs', (req, res) => {
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
     });
-};
+});
+        
+        
 
 
 app.post('/logs', (req, res) => {
@@ -67,7 +86,12 @@ Log.find({ date: date }).then(log => {
           console.error(err);
           res.status(500).json({ message: 'Internal server error' });
        });
-    });
+    }});
+});
+    
+    
+    
+    
     
     
 app.put('/logs/:id', (req, res) => {
@@ -125,6 +149,11 @@ app.put('/logs/:id', (req, res) => {
 });
     
     
+    
+    
+    
+    
+    
 app.delete('/logs/:id', (req, res) => {
   Log.findByIdAndRemove(req.params.id)
     .then(log => res.status(204).end())
@@ -138,8 +167,18 @@ app.use('*', function(req, res) {
   res.status(404).json({ message: 'Not Found' });
 });
 
+    
+    
+    
+    
+//////////////////
+//Server
+//////////////////
+    
+    
+    
 
-
+    
 let server;
 
 function runServer(databaseUrl, port = PORT) {
