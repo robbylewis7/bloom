@@ -17,7 +17,6 @@ app.use(express.json());
 
 
 
-
 //////////////////
 //End-Points
 //////////////////
@@ -35,7 +34,7 @@ app.get('/', (req, res) => {
 app.get('/logs', (req, res) => {
       Log.find()
         .limit(5)
-//        .sort({ date: -1 })
+        .sort({ date: -1 })
         .then(logs => {
             res.status(200).json({
             logs: logs.map(log => log.serialize())
@@ -52,7 +51,7 @@ app.get('/logs', (req, res) => {
 
 app.post('/logs', (req, res) => {
 
-  const requiredFields = ['date', 'waterIntake', 'exercise', 'sleepStartHr'];
+  const requiredFields = ['date', 'waterIntake', 'exercise', 'sleepStartHr', 'sleepStartMin', 'sleepEndHr', 'sleepEndMin'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -62,7 +61,7 @@ app.post('/logs', (req, res) => {
     }
   }
 
-Log.find({ date: date }).then(log => {
+Log.find({ date: req.body.date }).then(log => {
     if (log.length !== 0) {
       return res.status(400).send('A log with this date already exists');
     } else {
@@ -107,7 +106,7 @@ app.put('/logs/:id', (req, res) => {
         let missingError = false;
 
   requiredFields.forEach(field => {
-    if (empty(req.body[field])) {
+    if (!(req.body[field])) {
       message = `Missing \`${field}\` value in request body`;
       console.error(message);
       missingError = true;
