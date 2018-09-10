@@ -23,17 +23,18 @@ app.use(express.json());
 
 
 
-
 app.get('/', (req, res) => {
   res.status(200);
   res.sendFile('index.html', { root: './public' });
 });
 
-
+//app.get('/all', (req, res) => {
+//  res.status(200);
+//  res.sendFile('all.html', { root: './public' });
+//});
 
 app.get('/logs', (req, res) => {
       Log.find()
-        .limit(5)
         .sort({ date: -1 })
         .then(logs => {
             res.status(200).json({
@@ -47,6 +48,15 @@ app.get('/logs', (req, res) => {
 });
         
         
+app.get('/logs/:id', (req, res) => {
+  Log.findById(req.params.id)
+    .then(log => res.json(log.serialize()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 
 
 app.post('/logs', (req, res) => {
