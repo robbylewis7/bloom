@@ -28,10 +28,10 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: './public' });
 });
 
-//app.get('/all', (req, res) => {
-//  res.status(200);
-//  res.sendFile('all.html', { root: './public' });
-//});
+app.get('/all', (req, res) => {
+  res.status(200);
+  res.sendFile('all.html', { root: './public' });
+});
 
 app.get('/logs', (req, res) => {
       Log.find()
@@ -156,9 +156,6 @@ app.put('/logs/:id', (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     });
 });
-    
-    
-    
     
     
     

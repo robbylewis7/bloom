@@ -6,17 +6,32 @@
     </head>
     
     <body>  
+        <header role="banner">
+		<h1><span class="logo"><a href="/">Bloom</a></span></h1>
+
+		<div role="nav" class="nav">
+			<div class="nav-link">
+				<h2><a href="/" >Home</a></h2>
+			</div>
+			<div class="nav-link ">
+				<h2><a href="/logs.html">All logs</a></h2>
+			</div>
+            <div class="nav-link ">
+				<h2><a href="">Dashboard</a></h2>
+			</div>
+		</div>
+	</header>
         <form class="log-create-form">
             <fieldset class="fieldset border-green">
-				<legend class="grey legend border-green">Create log</legend>
+				<legend>Create log</legend>
 				    <div class="form-elements">
                         
-				        <label for="entry-date" class="top-field">Date <span class="required red">*Required</span></label><input type="date" id="entry-date" class="field-border border-blue" min="2018-01-01" required><br>
+				        <label for="entry-date" class="top-field">Date <span class="required red">*Required</span></label><input type="date" id="entry-date" min="2018-01-01" required><br>
                 
                 
                                 <label for="sleepstart-hr">Slept last night @ <span class="italics-secondline">(24 hr clock)</span></label>
 								<select id="sleepstart-hr" class="sleep-select grey field-border-reverse border-lightblue" name="sleepstart-hr"><br>
-												<option value="--" id="sleepstart-hr--"></option>
+												<option value="xx" id="sleepstart-hrxx"></option>
 												<option value="00" id="sleepstart-hr00">00</option>
 												<option value="01" id="sleepstart-hr01">01</option>
 												<option value="02" id="sleepstart-hr02">02</option>
@@ -169,5 +184,7 @@
 							</fieldset>
 						</form>
     
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="index.js"></script>
     </body>
 </html>
