@@ -1,0 +1,11 @@
+html{
+    background-color: #795C5F;
+}
+
+#log-create-form{
+    display: none;
+}
+
+fieldset{
+    border: none;
+}

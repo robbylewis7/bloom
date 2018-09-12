@@ -1,39 +1,83 @@
 'use strict';
 
+//---------------------------------------------
+//show + hide submit form
+//---------------------------------------------
 
-//////
+$('.searchForDate').on('click', '#createNew', function(){
+    $('#log-create-form').show();
+    
+});
+
+$('#log-create-form').on('click', '.js-logCancelButton', function(){
+    $('#log-create-form').hide();
+    
+});
+
+
+
+
+//---------------------------------------------
 // get logs
-//////
-//
-//$('.allLogs').on('submit', function(e) {
-//    e.preventDefault();
-//    
-//    
-//    
-//const getLogs = (logData) => {
-//	return new Promise(function (resolve, reject) {
-//		$.ajax({
-//			url: '/logs',
-//			method: 'GET',
-//			dataType: 'json',
-//			data: JSON.stringify(logData),
-//		    success: resolve,
-//		    error: reject
-//		});
-//	})
+//---------------------------------------------
+
+function displayResults() {
+    $.getJSON('/logs', function(data) {
+        console.log(data);
+
+       let logArray = data.logs.map(function(data){
+           return `<div class = "eachLog">
+               <p>${new Date(data.date).toLocaleString()}</p>
+                <p>Sleep Total: ${data.sleepTotal}</p>
+                <p>Water Intake: ${data.waterIntake}</p>
+                <p>Clean Eating: ${data.cleanEating}</p>
+                <p>Stress: ${data.stress}</p>
+                <p>Energy: ${data.energy}</p>
+                <p>Exercise: ${data.exercise}</p>
+                <p>Strength of Community: ${data.communityFeeling}</p>
+                </div>
+                `
+            
+//            console.log(data.waterIntake);
+        })
+       $('#allLogUl').html(logArray);
+    });
+}
+
+
+function displayDayLog(){
+    $('#js-search-form').submit(function(e){
+        e.preventDefault();
+        let date = $('#search-date').val();
+        console.log("input date", date);
+        $.getJSON('/logs', function(data) {
+//        console.log(data);
+
+       let logArray = data.logs.filter(function(data){
+           return data.date.substring(0,10) === date;
+           console.log(data.date.substring(0,10));
+       })
+       console.log(logArray);
+        let today = `
+                    <span>${logArray[0].date}</span><br>
+`
+       $('#todaysLog').html(today);
+    })
+    
+});
+}
+
+
+//function getAllLogs(data){
+//    $('.allLogs').append(`${data.date}`);
 //}
 
-
-
-
-
-//////
+//---------------------------------------------
 // save new log button
-//////
+//---------------------------------------------
 
-setDefaults();
 
-        displayResults();
+
 
 
         $('#log-create-form').on('submit', function(e) {
@@ -73,12 +117,6 @@ setDefaults();
                 $('#exercise').val('02')
             }
 
-            function displayResults() {
-                $.getJSON('/logs', function(data) {
-                    console.log(data)
-                })
-            }
-
             function postNewLog(logData) {
             let settings = {
                 url: '/logs',
@@ -95,9 +133,9 @@ setDefaults();
                     .append(`Error: ${error}`);
                 });
             }
+
+        setDefaults();
+        displayResults();
+        displayDayLog();
+//        getAllLogs();
     
-    
-//    function todaysDate(){
-//        let today = new date();
-//        console.log(today);
-//    }
