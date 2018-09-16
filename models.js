@@ -65,6 +65,10 @@ dailyTrackerSchema.methods.serialize = function() {
     waterIntake: this.waterIntake,
     cleanEating: this.cleanEating,
     exercise: this.exercise,
+    sleepStartHr: this.sleepStartHr,
+    sleepStartMin: this.sleepStartMin,
+    sleepEndHr: this.sleepEndHr,
+    sleepEndMin: this.sleepEndMin,
     sleepTotal: this.sleepTotal,
     };
   };

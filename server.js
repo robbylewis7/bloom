@@ -61,7 +61,7 @@ app.get('/logs/:id', (req, res) => {
 
 app.post('/logs', (req, res) => {
 
-  const requiredFields = ['date', 'waterIntake', 'exercise', 'sleepStartHr', 'sleepStartMin', 'sleepEndHr', 'sleepEndMin'];
+  const requiredFields = ['date', 'waterIntake', 'exercise', 'sleepStartHr', 'sleepStartMin', 'sleepEndHr', 'sleepEndMin', 'gratitude', 'cleanEating', 'communityFeeling', 'stress', 'energy'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
