@@ -177,28 +177,7 @@ function displayDayLog(){
                 });
             }
 
-//---------------------------------------------
-// delete log 
-//---------------------------------------------
 
-$('#log-edit-form').on('click', '#delete-button', function(){
-        console.log('click');
-         });
-
-//
-//function deleteLog(id) {
-//  let settings = {
-//    url: `/logs/${id}`,
-//    method: 'DELETE'
-//  };
-//
-//  $.ajax(settings)
-//    .fail((xhr, status, error) => {
-//      $('.error-message')
-//        .empty()
-//        .append(`Error: ${error}`);
-//    });
-//}
 
 //---------------------------------------------
 // edit log button
@@ -390,17 +369,14 @@ $('#todaysLog').on('click', '#editButton', function(){
 
 										<div class="form-buttons-div">
 											<input type="submit" name="update-button" value="Update" class="editButtons js-logUpdateButton">
-                                            <button type="button" name="delete-button" id = "delete-button" class="editButtons js-logDeleteButton">Delete</button>
+                                            <button type="button" name="delete-button" id = "deleteButton" class="editButtons js-logDeleteButton">Delete</button>
 											<button type="button" name="cancel-button" class="editButtons js-logCancelButton">Cancel</button>
                                             
 										</div>
 
-										<div class="error-message red">
-										</div>
 							</fieldset>
 						</form>
             </div>`
-        console.log(logArray[0].sleepEndHr);
         $('#todaysLog').html(today);
         $('#editStress').val(`0${logArray[0].stress}`);
         $('#cleanEating').val(`0${logArray[0].cleanEating}`);
@@ -422,7 +398,7 @@ $('#todaysLog').on('click', '#editButton', function(){
 });
 
 
-    $('#log-edit-form').on('click', function(e) {
+    $('#log-edit-form').on('submit', function(e) {
             e.preventDefault();
             let logEditData = {
                 date: $('#entry-date').val(),
@@ -462,7 +438,28 @@ $('#todaysLog').on('click', '#editButton', function(){
                 });
             };
 
+//---------------------------------------------
+// delete log 
+//---------------------------------------------
 
+$('#log-edit-form').on('click', '#deleteButton', function(){
+        console.log('click');
+});
+
+//
+//function deleteLog(id) {
+//  let settings = {
+//    url: `/logs/${id}`,
+//    method: 'DELETE'
+//  };
+//
+//  $.ajax(settings)
+//    .fail((xhr, status, error) => {
+//      $('.error-message')
+//        .empty()
+//        .append(`Error: ${error}`);
+//    });
+//}
         
 
         displayResults();
