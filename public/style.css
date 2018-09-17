@@ -46,6 +46,7 @@ header a{
 
 header a:hover{
     font-weight: bold;
+    border-bottom: 2px solid white;
 }
 
 
@@ -76,6 +77,8 @@ html, body{
     color: white;
     border-bottom: 2px solid white;
 }
+
+
 
 html {
   box-sizing: border-box;
@@ -172,7 +175,7 @@ body {
     justify-content: center;
 }
 
-#log-create-form{
+#log-create-form, #log-edit-form{
     text-align: left;
     color: #6A79A6;
     background: #B7BED8;

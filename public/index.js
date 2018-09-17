@@ -7,6 +7,7 @@
 $('#log-create-form').hide();
 
 
+
 $('.searchForDate').on('click', '#createNew', function(){
     $('#log-create-form').show();
     $('.searchForDate').hide();
@@ -18,7 +19,6 @@ $('.searchForDate').on('click', '#createNew', function(){
 $('#log-create-form').on('click', '.js-logCancelButton', function(){
     $('.searchForDate').show();
     $('#log-create-form').hide();
-    
     
 });
 
@@ -36,9 +36,26 @@ $('#log-create-form').on('click', '.js-logCancelButton', function(){
 //}
 
 
+//---------------------------------------------
+//Default to today for new logs
+//---------------------------------------------
 
-        
-            
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; 
+var yyyy = today.getFullYear();
+
+if(dd<10) {
+    dd = '0'+dd
+} 
+
+if(mm<10) {
+    mm = '0'+mm
+} 
+
+today = yyyy + '-' + mm + '-' + dd;
+
+$('#entry-date').val(today);
 
 
 
@@ -52,7 +69,7 @@ function displayResults() {
 
        let logArray = data.logs.map(function(data){
            return `<div class = "eachLog">
-               <span id = "logDate"><p>${new Date(data.date).toLocaleString().substring(0,9)}</p></span>
+               <span id = "logDate"><p>${new Date(data.date).toLocaleDateString()}</p></span>
                 <p id = "sleepTotal">Sleep Total: ${data.sleepTotal}</p>
                 <p id = "waterIntake">Water Intake: ${data.waterIntake}</p> 
                 <p id = "cleanEating">Clean Eating: ${data.cleanEating}</p>
@@ -139,20 +156,6 @@ function displayDayLog(){
             postNewLog(logData);
             });
 
-//            function setDefaults() {
-//                console.log('test')
-//                $('#sleepstart-hr').val('20');
-//                $('#sleepstart-min').val('15');
-//                $('#sleepend-hr').val('06');
-//                $('#sleepend-min').val('45');
-//                $('#stress').val('03');
-//                $('#gratitude').val('02');
-//                $('#energy').val('05');
-//                $('#communityFeeling').val('03');
-//                $('#waterIntake').val('04');
-//                $('#cleanEating').val('01');
-//                $('#exercise').val('02')
-//            }
 
             function postNewLog(logData) {
             let settings = {
@@ -160,7 +163,10 @@ function displayDayLog(){
                 method: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify(logData)
+                data: JSON.stringify(logData),
+                success: function(){
+                    alert('Item has been saved!');
+                }
             };
 
             $.ajax(settings)
@@ -172,28 +178,43 @@ function displayDayLog(){
             }
 
 //---------------------------------------------
+// delete log 
+//---------------------------------------------
+
+$('#log-edit-form').on('click', '#delete-button', function(){
+        console.log('click');
+         });
+
+//
+//function deleteLog(id) {
+//  let settings = {
+//    url: `/logs/${id}`,
+//    method: 'DELETE'
+//  };
+//
+//  $.ajax(settings)
+//    .fail((xhr, status, error) => {
+//      $('.error-message')
+//        .empty()
+//        .append(`Error: ${error}`);
+//    });
+//}
+
+//---------------------------------------------
 // edit log button
 //---------------------------------------------
 
 
 $('#todaysLog').on('click', '#editButton', function(){
-        console.log('clicked');
-        
-    
-    
-        console.log('water intake', $('#waterIntake').val());
         let date = $('#search-date').val();
         console.log(date);
         $.getJSON('/logs', function(data) {
         let logArray = data.logs.filter(function(data){
         return data.date.substring(0,10) === date;
-       })
-        console.log(logArray);
-        console.log(logArray[0].stress);
-        $('#stress').val(logArray[0].stress);
+       });
         let today = `
        <div id = "createLog">
-        <form id="log-create-form">
+        <form id="log-edit-form">
             <fieldset>
 				    <div class="form-elements">
                         
@@ -206,15 +227,15 @@ $('#todaysLog').on('click', '#editButton', function(){
 								<select id="sleepstart-hr" class="select" name="sleepstart-hr"><br>
 												<option value="xx" id="sleepstart-hrxx"></option>
 												<option value="00" id="sleepstart-hr00">12AM</option>
-												<option value="01" id="sleepstart-hr01">1AM</option>
-												<option value="02" id="sleepstart-hr02">2AM</option>
-												<option value="03" id="sleepstart-hr03">3AM</option>
-												<option value="04" id="sleepstart-hr04">4AM</option>
-												<option value="05" id="sleepstart-hr05">5AM</option>
-												<option value="06" id="sleepstart-hr06">6AM</option>
-												<option value="07" id="sleepstart-hr07">7AM</option>
-												<option value="08" id="sleepstart-hr08">8AM</option>
-												<option value="09" id="sleepstart-hr09">9AM</option>
+												<option value="1" id="sleepstart-hr01">1AM</option>
+												<option value="2" id="sleepstart-hr02">2AM</option>
+												<option value="3" id="sleepstart-hr03">3AM</option>
+												<option value="4" id="sleepstart-hr04">4AM</option>
+												<option value="5" id="sleepstart-hr05">5AM</option>
+												<option value="6" id="sleepstart-hr06">6AM</option>
+												<option value="7" id="sleepstart-hr07">7AM</option>
+												<option value="8" id="sleepstart-hr08">8AM</option>
+												<option value="9" id="sleepstart-hr09">9AM</option>
 												<option value="10" id="sleepstart-hr10">10AM</option>
 												<option value="11" id="sleepstart-hr11">11AM</option>
 												<option value="12" id="sleepstart-hr12">12PM</option>
@@ -249,15 +270,15 @@ $('#todaysLog').on('click', '#editButton', function(){
 											<select id="sleepend-hr" class="select" name="sleepsend-hr"><br>
 												<option value="xx" id="sleepend-hrxx"></option>
 												<option value="00" id="sleepend-hr00">12AM</option>
-												<option value="01" id="sleepend-hr01">1AM</option>
-												<option value="02" id="sleepend-hr02">2AM</option>
-												<option value="03" id="sleepend-hr03">3AM</option>
-												<option value="04" id="sleepend-hr04">4AM</option>
-												<option value="05" id="sleepend-hr05">5AM</option>
-												<option value="06" id="sleepend-hr06">6AM</option>
-												<option value="07" id="sleepend-hr07">7AM</option>
-												<option value="08" id="sleepend-hr08">8AM</option>
-												<option value="09" id="sleepend-hr09">9AM</option>
+												<option value="1" id="sleepend-hr01">1AM</option>
+												<option value="2" id="sleepend-hr02">2AM</option>
+												<option value="3" id="sleepend-hr03">3AM</option>
+												<option value="4" id="sleepend-hr04">4AM</option>
+												<option value="5" id="sleepend-hr05">5AM</option>
+												<option value="6" id="sleepend-hr06">6AM</option>
+												<option value="7" id="sleepend-hr07">7AM</option>
+												<option value="8" id="sleepend-hr08">8AM</option>
+												<option value="9" id="sleepend-hr09">9AM</option>
 												<option value="10" id="sleepend-hr10">10AM</option>
 												<option value="11" id="sleepend-hr11">11AM</option>
 												<option value="12" id="sleepend-hr12">12PM</option>
@@ -369,7 +390,7 @@ $('#todaysLog').on('click', '#editButton', function(){
 
 										<div class="form-buttons-div">
 											<input type="submit" name="update-button" value="Update" class="editButtons js-logUpdateButton">
-                                            <button type="button" name="delete-button" class="editButtons js-logDeleteButton">Delete</button>
+                                            <button type="button" name="delete-button" id = "delete-button" class="editButtons js-logDeleteButton">Delete</button>
 											<button type="button" name="cancel-button" class="editButtons js-logCancelButton">Cancel</button>
                                             
 										</div>
@@ -379,6 +400,7 @@ $('#todaysLog').on('click', '#editButton', function(){
 							</fieldset>
 						</form>
             </div>`
+        console.log(logArray[0].sleepEndHr);
         $('#todaysLog').html(today);
         $('#editStress').val(`0${logArray[0].stress}`);
         $('#cleanEating').val(`0${logArray[0].cleanEating}`);
@@ -386,11 +408,60 @@ $('#todaysLog').on('click', '#editButton', function(){
         $('#energy').val(`0${logArray[0].energy}`);
         $('#exercise').val(`0${logArray[0].exercise}`);
         $('#waterIntake').val(logArray[0].waterIntake);
+        $('#sleepstart-hr').val(logArray[0].sleepStartHr); 
+        $('#sleepstart-min').val(logArray[0].sleepStartMin); 
+        $('#sleepend-hr').val(logArray[0].sleepEndHr); 
+        $('#sleepend-min').val(logArray[0].sleepEndMin); 
+
+            
+            
 
 
 
     });
 });
+
+
+    $('#log-edit-form').on('click', function(e) {
+            e.preventDefault();
+            let logEditData = {
+                date: $('#entry-date').val(),
+                sleepStartHr: $('#sleepstart-hr option:selected').val(),
+                sleepStartMin: $('#sleepstart-min option:selected').val(),
+                sleepEndHr: $('#sleepend-hr option:selected').val(),
+                sleepEndMin: $('#sleepend-min option:selected').val(),
+                stress: $('#stress option:selected').val(),
+                gratitude: $('#gratitude option:selected').val(),
+                energy: $('#energy option:selected').val(),
+                communityFeeling: $('#communityFeeling option:selected').val(),
+                waterIntake: $('#waterIntake option:selected').val(),
+                cleanEating: $('#cleanEating option:selected').val(),
+                exercise: $('#exercise option:selected').val(),
+
+            };
+            console.log(logEditData)
+            putEditedLog(logEditData);
+            });
+
+
+            function putEditedLog(logEditData) {
+            let settings = {
+                url: `/logs/:${id}`,
+                method: 'PUT',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(logEditData),
+                }
+
+
+            $.ajax(settings)
+                .fail((xhr, status, error) => {
+                $('.error-message')
+                    .empty()
+                    .append(`Error: ${error}`);
+                });
+            };
+
 
         
 
