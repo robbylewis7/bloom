@@ -23,17 +23,6 @@ $('#log-create-form').on('click', '.js-logCancelButton', function(){
 });
 
 
-//function getTemplate(data){
-//    return `<span id = "logDate"><p>${data.date.substring(0,10)}</p></span>
-//                <p id = "sleepTotal">Sleep Total: ${data.sleepTotal}</p>
-//                <p id = "waterIntake">Water Intake: ${data.waterIntake}</p> 
-//                <p id = "cleanEating">Clean Eating: ${data.cleanEating}</p>
-//                <p id = "stress">Stress: ${data.stress}</p>
-//                <p id = "energy">Energy: ${data.energy}</p>
-//                <p id = "exercise">Exercise: ${data.exercise}</p>
-//                <p id = "community">Strength of Community: ${data.communityFeeling}</p>
-//                <input type = "hidden" id = "id" value = ${data.id}>`
-//}
 
 
 //---------------------------------------------
@@ -66,8 +55,6 @@ $('#entry-date').val(today);
 function displayResults() {
     $.getJSON('/logs', function(data) {
         console.log(data);
-
-
        let logArray = data.logs.map(function(data){
            return `<div class = "eachLog">
                <span id = "logDate"><p>${new Date(data.date).getMonth()+1}/${new Date(data.date).getDate()+1}/${new Date(data.date).getFullYear()}</p></span>
@@ -110,7 +97,6 @@ function displayDayLog(){
                 <p id = "energy">Energy: ${logArray[0].energy}</p>
                 <p id = "exercise">Exercise: ${logArray[0].exercise}</p>
                 <p id = "community">Strength of Community: ${logArray[0].communityFeeling}</p>
-                <input type = "hidden" id = "id" value = ${logArray[0].id}>
                 <button type= "button" class = "logSearchButtons" id = "editButton">Edit</button>
                 <button type = "button" class = "logSearchButtons">Cancel</button>
         </div>
@@ -366,6 +352,7 @@ $('#todaysLog').on('click', '#editButton', function(){
 											<input type="submit" name="update-button" value="Update" class="editButtons js-logUpdateButton">
                                             <button type="button" name="delete-button" id ="deleteButton" class="editButtons js-logDeleteButton">Delete</button>
 											<button type="button" name="cancel-button" id="cancelButton" class="editButtons js-logCancelButton">Cancel</button>
+                                            <input type = "hidden" id = "id">
 										</div>
 							</fieldset>
 						</form>
@@ -382,7 +369,7 @@ $('#todaysLog').on('click', '#editButton', function(){
         $('#sleepstart-min').val(logArray[0].sleepStartMin); 
         $('#sleepend-hr').val(logArray[0].sleepEndHr); 
         $('#sleepend-min').val(logArray[0].sleepEndMin); 
-
+        $('#id').val(logArray[0].id);
 
     });
 });
@@ -403,23 +390,28 @@ $('#todaysLog').on('click', '#editButton', function(){
                 waterIntake: $('#waterIntake option:selected').val(),
                 cleanEating: $('#cleanEating option:selected').val(),
                 exercise: $('#exercise option:selected').val(),
+                id: $('#id').val()
 
             };
-            console.log(logArray[0].id)
+            console.log(id);
             putEditedLog(logEditData);
             });
 
 
             function putEditedLog(logEditData) {
             let settings = {
-                url: '/logs/id',
+                url: /logs/+logEditData.id,
                 method: 'PUT',
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify(logEditData),
+                success: function(){
+                alert('Your log has been updated!');
+                $('#createLog').hide();
+                
+            }
                 }
-
-
+            
             $.ajax(settings)
                 .fail((xhr, status, error) => {
                 $('.error-message')
@@ -432,24 +424,31 @@ $('#todaysLog').on('click', '#editButton', function(){
 // delete log 
 //---------------------------------------------
 
-   $('#editLog').on('submit','#deleteButton', function(e) {   
-       console.log('click');
-    
+   $('#editLog').on('click','#deleteButton', function(e) { 
+       let id = $('#id').val()
+       deleteLog(id);
+       
 });
-//
-//function deleteLog(id) {
-//  let settings = {
-//    url: `/logs/${id}`,
-//    method: 'DELETE'
-//  };
-//
-//  $.ajax(settings)
-//    .fail((xhr, status, error) => {
-//      $('.error-message')
-//        .empty()
-//        .append(`Error: ${error}`);
-//    });
-//}
+
+function deleteLog(id) {
+  let settings = {
+    url: /logs/+id,
+    method: 'DELETE',
+    success: function(){
+      alert('Log has been deleted');
+      $('#createLog').hide();
+      $('#search-date').val('');
+      $('#instructions').show();
+  }
+  };
+
+  $.ajax(settings)
+    .fail((xhr, status, error) => {
+      $('.error-message')
+        .empty()
+        .append(`Error: ${error}`);
+    });
+}
         
 
         displayResults();

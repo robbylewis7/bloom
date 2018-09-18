@@ -17,13 +17,19 @@ fieldset{
     margin-left: 20px;
 }
 
+#icon{
+    width: 50px;
+    height: 50px;
+}
+
 header{
     width: 100%;
-    height: 25%;
+    height: 15%;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     text-transform: uppercase;
+    margin-bottom: 150px;
 }
 
 #createNewIcon{
@@ -35,14 +41,17 @@ header li{
    list-style-type: none;
    display: inline;
    padding: 0 20px;
-   font-size: 18px;
+   font-size: 20px;
 
 }
+
 
 header a{
     text-decoration: none;
     color: white;
 }
+
+
 
 header a:hover{
     font-weight: bold;
@@ -59,7 +68,7 @@ html, body{
 
 #instructions{
     margin-bottom: 180px;
-    font-size: 36px;
+    font-size: 30px;
     border-bottom: 2px solid white;
 }
 
