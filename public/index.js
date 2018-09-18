@@ -67,9 +67,10 @@ function displayResults() {
     $.getJSON('/logs', function(data) {
         console.log(data);
 
+
        let logArray = data.logs.map(function(data){
            return `<div class = "eachLog">
-               <span id = "logDate"><p>${new Date(data.date).toLocaleDateString()}</p></span>
+               <span id = "logDate"><p>${new Date(data.date).getMonth()+1}/${new Date(data.date).getDate()+1}/${new Date(data.date).getFullYear()}</p></span>
                 <p id = "sleepTotal">Sleep Total: ${data.sleepTotal}</p>
                 <p id = "waterIntake">Water Intake: ${data.waterIntake}</p> 
                 <p id = "cleanEating">Clean Eating: ${data.cleanEating}</p>
@@ -100,7 +101,7 @@ function displayDayLog(){
        console.log(logArray);
         let today = `
         <div id = "logSearch">
-               <span id = "logDate"><p>${logArray[0].date.substring(0,10)}</p></span>
+               <span id = "logDate"><p>${new Date(logArray[0].date).getMonth()+1}/${new Date(logArray[0].date).getDate()+1}/${new Date(logArray[0].date).getFullYear()}</p></span>
                 <p id = "sleepTotal">Sleep Total: ${logArray[0].sleepTotal}</p>
                 <p id = "waterIntake">Water Intake: ${logArray[0].waterIntake}</p> 
                 <p id = "cleanEating">Clean Eating: ${logArray[0].cleanEating}</p>
@@ -122,9 +123,6 @@ function displayDayLog(){
 }
 
 
-//function getAllLogs(data){
-//    $('.allLogs').append(`${data.date}`);
-//}
 
 //---------------------------------------------
 // save new log button
@@ -191,6 +189,7 @@ $('#todaysLog').on('click', '#editButton', function(){
         let logArray = data.logs.filter(function(data){
         return data.date.substring(0,10) === date;
        });
+            console.log(logArray);
         let today = `
        <div id = "createLog">
         <form id="log-edit-form">
@@ -334,16 +333,15 @@ $('#todaysLog').on('click', '#editButton', function(){
                                             <label for="waterIntake">Today I drank at least</label>
 								            <select id="waterIntake" name="waterIntake" class="select"><br>
                                                 <option value="--" id="waterIntake--"></option>
-												<option value="16" id="waterIntake01"> 16</option>
-												<option value="32" id="waterIntake02"> 32</option>
-												<option value="48" id="waterIntake03"> 48</option>
+												<option value="16" id="waterIntake01">16</option>
+												<option value="32" id="waterIntake02">32</option>
+												<option value="48" id="waterIntake03">48</option>
 												<option value="64" id="waterIntake04">64</option>
 												<option value="80" id="waterIntake05">80</option>
                                             </select><label>ounces of water</label>
                                             </div>
                         
                                         <div class="form-elements">
-
                                             <label for="cleanEating">Clean Eating</label>
 								            <select id="cleanEating" name="cleanEating" class="select"><br>
                                                 <option value="--" id="cleanEating--"></option>
@@ -355,7 +353,6 @@ $('#todaysLog').on('click', '#editButton', function(){
                                             </select><br></div>
                         
                                         <div class="form-elements">
-
                                             <label for="exercise">Exercise</label>
 								            <select id="exercise" name="exercise" class="select"><br>
                                                 <option value="--" id="exercise--"></option>
@@ -365,19 +362,16 @@ $('#todaysLog').on('click', '#editButton', function(){
 												<option value="04" id="exercise04">04</option>
 												<option value="05" id="exercise05">05</option>
                                             </select><br></div>
-
-
 										<div class="form-buttons-div">
 											<input type="submit" name="update-button" value="Update" class="editButtons js-logUpdateButton">
-                                            <button type="button" name="delete-button" id = "deleteButton" class="editButtons js-logDeleteButton">Delete</button>
-											<button type="button" name="cancel-button" class="editButtons js-logCancelButton">Cancel</button>
-                                            
+                                            <button type="button" name="delete-button" id ="deleteButton" class="editButtons js-logDeleteButton">Delete</button>
+											<button type="button" name="cancel-button" id="cancelButton" class="editButtons js-logCancelButton">Cancel</button>
 										</div>
-
 							</fieldset>
 						</form>
             </div>`
-        $('#todaysLog').html(today);
+     $('#todaysLog').hide();
+      $('#editLog').html(today);
         $('#editStress').val(`0${logArray[0].stress}`);
         $('#cleanEating').val(`0${logArray[0].cleanEating}`);
         $('#communityFeeling').val(`0${logArray[0].communityFeeling}`);
@@ -389,16 +383,12 @@ $('#todaysLog').on('click', '#editButton', function(){
         $('#sleepend-hr').val(logArray[0].sleepEndHr); 
         $('#sleepend-min').val(logArray[0].sleepEndMin); 
 
-            
-            
-
-
 
     });
 });
 
 
-    $('#log-edit-form').on('submit', function(e) {
+   $('#editLog').on('submit','#log-edit-form', function(e) {
             e.preventDefault();
             let logEditData = {
                 date: $('#entry-date').val(),
@@ -415,14 +405,14 @@ $('#todaysLog').on('click', '#editButton', function(){
                 exercise: $('#exercise option:selected').val(),
 
             };
-            console.log(logEditData)
+            console.log(logArray[0].id)
             putEditedLog(logEditData);
             });
 
 
             function putEditedLog(logEditData) {
             let settings = {
-                url: `/logs/:${id}`,
+                url: '/logs/id',
                 method: 'PUT',
                 dataType: 'json',
                 contentType: 'application/json',
@@ -442,10 +432,10 @@ $('#todaysLog').on('click', '#editButton', function(){
 // delete log 
 //---------------------------------------------
 
-$('#log-edit-form').on('click', '#deleteButton', function(){
-        console.log('click');
+   $('#editLog').on('submit','#deleteButton', function(e) {   
+       console.log('click');
+    
 });
-
 //
 //function deleteLog(id) {
 //  let settings = {
@@ -464,4 +454,3 @@ $('#log-edit-form').on('click', '#deleteButton', function(){
 
         displayResults();
         displayDayLog();
-    
