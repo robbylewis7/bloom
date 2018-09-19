@@ -5,8 +5,15 @@
 //---------------------------------------------
 
 $('#log-create-form').hide();
+$('#js-search-form').hide();
 
+$('.searchForDate').on('click', '#searchNew', function(){
+  $('#js-search-form').show();
+  $('#startSection').hide();
+  $('#instructions').hide();
 
+    
+});
 
 $('.searchForDate').on('click', '#createNew', function(){
     $('#log-create-form').show();
