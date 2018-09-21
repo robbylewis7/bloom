@@ -6,6 +6,27 @@
 
 $('#log-create-form').hide();
 $('#js-search-form').hide();
+$('#signupForm').hide()
+$('#loginForm').hide()
+
+
+$('.header-content').on('click', '#signup', function(){
+    console.log('cl');
+    $('#signupForm').show();
+    $('.content').hide();
+    $('#signup').hide()
+    $('#login').hide()
+
+});
+
+$('.header-content').on('click', '#login', function(){
+    console.log('cl');
+    $('#loginForm').show();
+    $('.content').hide();
+    $('#signup').hide()
+    $('#login').hide()
+
+});
 
 $('.searchForDate').on('click', '#searchNew', function(){
   $('#js-search-form').show();
@@ -29,6 +50,17 @@ $('#log-create-form').on('click', '.js-logCancelButton', function(){
     
 });
 
+$('#loginSwitch').on('click', function(){
+    $('#loginForm').show();
+    $('#signupForm').hide();
+
+})
+
+$('#signupSwitch').on('click', function(){
+    $('#loginForm').hide();
+    $('#signupForm').show();
+
+})
 
 
 
@@ -460,3 +492,110 @@ function deleteLog(id) {
 
         displayResults();
         displayDayLog();
+
+
+//---------------------------------------------
+// Login and Signup Forms
+//---------------------------------------------
+
+function listenForLogin() {
+    $('#loginForm').on('submit', event => {
+        event.preventDefault();
+        let username = $('#login-username').val().trim();
+        let password = $('#login-password').val().trim();
+        login(username, password);
+
+    });
+}
+
+function login(username, password) {
+    $.ajax({
+        url: '/api/auth/login',
+        headers: {
+            'content-type': 'application/json'
+        },
+        data: JSON.stringify({
+            username, password
+        }),
+        method: 'post',
+        success: ((token) => {
+            localStorage.authToken = token.authToken;
+            localStorage.id = token.id;
+            window.location.href = 'main.html';
+        }),
+        error: () => {
+            $('#login-error').html('Please enter a valid username and password');
+            $('#login-error-row').removeClass('hidden');
+        }
+    });
+}
+
+function listenForLogoutButton() {
+    $('#logout').on('click', 'button', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/api/auth/logout',
+            headers: {
+                'content-type': 'application/json',
+                'authorization': 'bearer ' + localStorage.authToken
+            },
+            type: 'GET',
+            success: () => {
+                delete localStorage.authToken;
+                delete localStorage.id;
+                window.location = '/';
+                
+            },
+            error: () => {
+                console.error('Something went wrong');
+            }
+        });
+    });
+}
+
+function listenForSignUpButton() {
+    $('#signupForm').on('submit', event => {
+        event.preventDefault();
+        let firstName = $('#firstName').val().trim();
+        let lastName = $('#lastName').val().trim();
+        let username = $('#username').val();
+        let password = $('#password').val();
+        let email = $('#email').val().trim();
+
+        $.ajax({
+            url: '/api/users',
+            headers: {
+                'content-type': 'application/json'
+            },
+            data: JSON.stringify({
+                firstName, lastName, username, password, email
+            }),
+            type: 'POST',
+            success: () => {
+                login(username, password);
+            },
+            error: (res) => {
+                $('#signup-error').html(res.responseJSON.error);
+                $('#signup-error-row').removeClass('hidden');
+            }
+        });
+    });
+}
+
+//function listenForDemoButton() {
+//    $('.nav-bar').on('click', '#demo-button', function(event) {
+//        event.preventDefault();
+//
+//        let username = '';
+//        let password = '';
+//
+//        login(username, password);
+//    });
+//}
+
+
+    listenForLogin();
+    listenForSignUpButton();
+    listenForLogoutButton();
+//    listenForDemoButton();

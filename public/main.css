@@ -56,6 +56,8 @@ html, body{
   height: 100%
 }
 
+
+
 #instructions{
     margin-bottom: 180px;
     font-size: 36px;
@@ -259,7 +261,6 @@ body {
   border: 0;
   padding: 0;
   position: relative;
-/*  color: white;*/
   border-bottom: 1px solid white;
 }
 
