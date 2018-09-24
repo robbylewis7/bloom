@@ -62,7 +62,24 @@ $('#signupSwitch').on('click', function(){
 
 })
 
+$('#cancel').on('click', function(){
+    $('#startSection').show();
+    $('#js-search-form').hide();
+    $('#instructions').show();
+    $('#todaysLog').hide();
+})
 
+$('.js-logCancelButton').on('click', function(){
+    $('#startSection').show();
+    $('#js-search-form').hide();
+    $('#instructions').show();
+}) 
+
+$('#logFormation').on('click', '#cancelButton', function(){
+    $('#log-edit-form').hide();
+    $('#js-search-form').show();
+    $('#logSearch').show();
+})
 
 //---------------------------------------------
 //Default to today for new logs
@@ -91,6 +108,7 @@ $('#entry-date').val(today);
 // get logs
 //---------------------------------------------
 
+
 function displayResults() {
     $.getJSON('/logs', function(data) {
         console.log(data);
@@ -107,7 +125,6 @@ function displayResults() {
                 </div>
                 `
             
-//            console.log(data.waterIntake);
         })
        $('#allLogUl').html(logArray);
     });
@@ -125,6 +142,7 @@ function displayDayLog(){
            return data.date.substring(0,10) === date;
        })
        console.log(logArray);
+        if (logArray.length > 0){
         let today = `
         <div id = "logSearch">
                <span id = "logDate"><p>${new Date(logArray[0].date).getMonth()+1}/${new Date(logArray[0].date).getDate()+1}/${new Date(logArray[0].date).getFullYear()}</p></span>
@@ -141,7 +159,14 @@ function displayDayLog(){
         </div>
 `
        $('#todaysLog').html(today);
-    })
+    } else { 
+            let today = `
+        <div id = "logSearch">
+            <p>No data found for that date</p>
+        </div>`
+       $('#todaysLog').html(today);
+                  }}
+                 )
     
     
 });

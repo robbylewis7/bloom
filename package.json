@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai-http": "^4.2.0",
+    "chart.js": "^2.7.2",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "local": "^0.3.3",

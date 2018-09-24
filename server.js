@@ -53,6 +53,11 @@ app.get('/all', (req, res) => {
   res.sendFile('all.html', { root: './public' });
 });
 
+app.get('/dashboard', (req, res) => {
+  res.status(200);
+  res.sendFile('dashboard.html', { root: './public' });
+});
+
 app.get('/logs', (req, res) => {
       Log.find()
         .sort({ date: -1 })
