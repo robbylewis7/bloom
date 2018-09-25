@@ -58,7 +58,7 @@ app.get('/dashboard', (req, res) => {
   res.sendFile('dashboard.html', { root: './public' });
 });
 
-app.get('/logs', (req, res) => {
+app.get('/logs', jwtAuth, (req, res) => {
       Log.find()
         .sort({ date: -1 })
         .then(logs => {
@@ -82,11 +82,16 @@ app.get('/logs/:id', (req, res) => {
     });
 });
 
+app.get('/logs/user/:user', (req, res) => { 
+    Log.find({user: req.params.user})
+        .then(log => {res.json(log)})
+        .catch(err => { 
+        console.error(err); res.status(500).json({ message: 'Internal server error' }); }); });
 
 
-app.post('/logs', (req, res) => {
+app.post('/logs', jwtAuth, (req, res) => {
 
-  const requiredFields = ['date', 'sleepStartHr', 'sleepStartMin', 'sleepEndHr', 'sleepEndMin'];
+  const requiredFields = ['date', 'sleepStartHr', 'sleepStartMin', 'sleepEndHr', 'sleepEndMin', 'user'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -114,6 +119,7 @@ Log.find({ date: req.body.date }).then(log => {
             sleepStartMin: req.body.sleepStartMin,
             sleepEndHr: req.body.sleepEndHr,
             sleepEndMin: req.body.sleepEndMin,
+            user: req.user.username
       })
         .then(log => res.status(201).json(log.serialize()))
         .catch(err => {

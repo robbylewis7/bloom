@@ -17,6 +17,7 @@ const dailyTrackerSchema = new Schema({
   waterIntake: Number,
   cleanEating: Number,
   exercise: Number,
+  user: String
 })
 
 function calculateSleepTotal(startHr, startMin, endHr, endMin) {
@@ -70,6 +71,7 @@ dailyTrackerSchema.methods.serialize = function() {
     sleepEndHr: this.sleepEndHr,
     sleepEndMin: this.sleepEndMin,
     sleepTotal: this.sleepTotal,
+    user: this.user
     };
   };
 

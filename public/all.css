@@ -10,7 +10,9 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    text-transform: uppercase;
 }
+
 
 
 header li{
@@ -23,15 +25,24 @@ header li{
 
 header a{
     text-decoration: none;
-        color: white;
+    color: white;
 }
 
 header a:hover{
     font-weight: bold;
+    border-bottom: 2px solid white;
 }
 
 .logo{
     margin-left: 20px;
+}
+
+#logo{
+    height: 60px;
+    height: 60px;
+    position:absolute;
+    left: 130px;
+    top: 5px;
 }
 
 

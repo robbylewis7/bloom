@@ -48,6 +48,13 @@ header a:hover{
     border-bottom: 2px solid white;
 }
 
+#logo{
+    height: 60px;
+    height: 60px;
+    position:absolute;
+    left: 130px;
+    top: 5px;
+}
 
 html, body{
   background: #FE9985;
@@ -97,6 +104,11 @@ html {
   border-radius: 10%;
   text-align: left;
   width: 40%;
+}
+
+#logSearch h2{
+    text-align: center;
+    font-size: 18px;
 }
 
 .logSearchButtons{

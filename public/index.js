@@ -63,22 +63,18 @@ $('#signupSwitch').on('click', function(){
 })
 
 $('#cancel').on('click', function(){
-    $('#startSection').show();
-    $('#js-search-form').hide();
-    $('#instructions').show();
-    $('#todaysLog').hide();
+    location.reload();
+
 })
 
 $('.js-logCancelButton').on('click', function(){
-    $('#startSection').show();
-    $('#js-search-form').hide();
-    $('#instructions').show();
+    location.reload();
+
 }) 
 
 $('#logFormation').on('click', '#cancelButton', function(){
-    $('#log-edit-form').hide();
-    $('#js-search-form').show();
-    $('#logSearch').show();
+    location.reload();
+
 })
 
 //---------------------------------------------
@@ -109,26 +105,97 @@ $('#entry-date').val(today);
 //---------------------------------------------
 
 
-function displayResults() {
-    $.getJSON('/logs', function(data) {
-        console.log(data);
-       let logArray = data.logs.map(function(data){
-           return `<div class = "eachLog">
-               <span id = "logDate"><p>${new Date(data.date).getMonth()+1}/${new Date(data.date).getDate()+1}/${new Date(data.date).getFullYear()}</p></span>
-                <p id = "sleepTotal">Sleep Total: ${data.sleepTotal}</p>
-                <p id = "waterIntake">Water Intake: ${data.waterIntake}</p> 
-                <p id = "cleanEating">Clean Eating: ${data.cleanEating}</p>
-                <p id = "stress">Stress: ${data.stress}</p>
-                <p id = "energy">Energy: ${data.energy}</p>
-                <p id = "exercise">Exercise: ${data.exercise}</p>
-                <p id = "community">Strength of Community: ${data.communityFeeling}</p>
-                </div>
-                `
-            
-        })
-       $('#allLogUl').html(logArray);
-    });
+//function displayResults() {
+//    $.getJSON('/logs', function(data) {
+//        console.log(data);
+//       let logArray = data.logs.map(function(data){
+//           return `<div class = "eachLog">
+//               <span id = "logDate"><p>${new Date(data.date).getMonth()+1}/${new Date(data.date).getDate()+1}/${new Date(data.date).getFullYear()}</p></span>
+//                <p id = "sleepTotal">Sleep Total: ${data.sleepTotal}</p>
+//                <p id = "waterIntake">Water Intake: ${data.waterIntake}</p> 
+//                <p id = "cleanEating">Clean Eating: ${data.cleanEating}</p>
+//                <p id = "stress">Stress: ${data.stress}</p>
+//                <p id = "energy">Energy: ${data.energy}</p>
+//                <p id = "exercise">Exercise: ${data.exercise}</p>
+//                <p id = "gratitude">Gratitude: ${data.gratitude}</p>
+//                <p id = "community">Strength of Community: ${data.communityFeeling}</p>
+//                </div>
+//                `
+//            
+//        })
+//       $('#allLogUl').html(logArray);
+//    });
+//}
+
+function displayResults() {    
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+            console.log('data', data)
+           let logArray = data.map(function(data){
+               return `<div class = "eachLog">
+                   <span id = "logDate"><p>${new Date(data.date).getMonth()+1}/${new Date(data.date).getDate()+1}/${new Date(data.date).getFullYear()}</p></span>
+                    <p id = "sleepTotal">Sleep Total: ${data.sleepTotal}</p>
+                    <p id = "waterIntake">Water Intake: ${data.waterIntake}</p> 
+                    <p id = "cleanEating">Clean Eating: ${data.cleanEating}</p>
+                    <p id = "stress">Stress: ${data.stress}</p>
+                    <p id = "energy">Energy: ${data.energy}</p>
+                    <p id = "exercise">Exercise: ${data.exercise}</p>
+                    <p id = "community">Strength of Community: ${data.communityFeeling}</p>
+                    </div>
+                    `
+            })
+           $('#allLogUl').html(logArray);
+        }
+    })
 }
+
+
+//function displayDayLog(){
+//    $('#js-search-form').submit(function(e){
+//        e.preventDefault();
+//        $('#instructions').hide();
+//        let date = $('#search-date').val();
+//        $.getJSON('/logs', function(data) {
+//
+//       let logArray = data.logs.filter(function(data){
+//           return data.date.substring(0,10) === date;
+//       })
+//       console.log(logArray);
+//        if (logArray.length > 0){
+//        let today = `
+//        <div id = "logSearch">
+//               <span id = "logDate"><p>${new Date(logArray[0].date).getMonth()+1}/${new Date(logArray[0].date).getDate()+1}/${new Date(logArray[0].date).getFullYear()}</p></span>
+//                <p id = "sleepTotal">Sleep Total: ${logArray[0].sleepTotal}</p>
+//                <p id = "waterIntake">Water Intake: ${logArray[0].waterIntake}</p> 
+//                <p id = "cleanEating">Clean Eating: ${logArray[0].cleanEating}</p>
+//                <p id = "stress">Stress: ${logArray[0].stress}</p>
+//                <p id = "gratitude">Gratitude: ${logArray[0].gratitude}</p>
+//                <p id = "energy">Energy: ${logArray[0].energy}</p>
+//                <p id = "exercise">Exercise: ${logArray[0].exercise}</p>
+//                <p id = "community">Strength of Community: ${logArray[0].communityFeeling}</p>
+//                <button type= "button" class = "logSearchButtons" id = "editButton">Edit</button>
+//                <button type = "button" class = "logSearchButtons">Cancel</button>
+//        </div>
+//`
+//       $('#todaysLog').html(today);
+//    } else { 
+//            let today = `
+//        <div id = "logSearch">
+//            <h2>No data found for that date</h2>
+//        </div>`
+//       $('#todaysLog').html(today);
+//                  }}
+//                 )
+//    
+//    
+//});
+//}
 
 
 function displayDayLog(){
@@ -136,42 +203,40 @@ function displayDayLog(){
         e.preventDefault();
         $('#instructions').hide();
         let date = $('#search-date').val();
-        $.getJSON('/logs', function(data) {
+        $.ajax({
+            url: '/logs', //TODO use the user endpoint
+            method: 'GET',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
+            },
+            success: function(data){
 
        let logArray = data.logs.filter(function(data){
            return data.date.substring(0,10) === date;
        })
        console.log(logArray);
-        if (logArray.length > 0){
         let today = `
-        <div id = "logSearch">
-               <span id = "logDate"><p>${new Date(logArray[0].date).getMonth()+1}/${new Date(logArray[0].date).getDate()+1}/${new Date(logArray[0].date).getFullYear()}</p></span>
-                <p id = "sleepTotal">Sleep Total: ${logArray[0].sleepTotal}</p>
-                <p id = "waterIntake">Water Intake: ${logArray[0].waterIntake}</p> 
-                <p id = "cleanEating">Clean Eating: ${logArray[0].cleanEating}</p>
-                <p id = "stress">Stress: ${logArray[0].stress}</p>
-                <p id = "gratitude">Gratitude: ${logArray[0].gratitude}</p>
-                <p id = "energy">Energy: ${logArray[0].energy}</p>
-                <p id = "exercise">Exercise: ${logArray[0].exercise}</p>
-                <p id = "community">Strength of Community: ${logArray[0].communityFeeling}</p>
-                <button type= "button" class = "logSearchButtons" id = "editButton">Edit</button>
-                <button type = "button" class = "logSearchButtons">Cancel</button>
-        </div>
-`
-       $('#todaysLog').html(today);
-    } else { 
-            let today = `
-        <div id = "logSearch">
-            <p>No data found for that date</p>
-        </div>`
-       $('#todaysLog').html(today);
-                  }}
-                 )
+            <div id = "logSearch">
+                   <span id = "logDate"><p>${new Date(logArray[0].date).getMonth()+1}/${new Date(logArray[0].date).getDate()+1}/${new Date(logArray[0].date).getFullYear()}</p></span>
+                    <p id = "sleepTotal">Sleep Total: ${logArray[0].sleepTotal}</p>
+                    <p id = "waterIntake">Water Intake: ${logArray[0].waterIntake}</p> 
+                    <p id = "cleanEating">Clean Eating: ${logArray[0].cleanEating}</p>
+                    <p id = "stress">Stress: ${logArray[0].stress}</p>
+                    <p id = "gratitude">Gratitude: ${logArray[0].gratitude}</p>
+                    <p id = "energy">Energy: ${logArray[0].energy}</p>
+                    <p id = "exercise">Exercise: ${logArray[0].exercise}</p>
+                    <p id = "community">Strength of Community: ${logArray[0].communityFeeling}</p>
+                    <button type= "button" class = "logSearchButtons" id = "editButton">Edit</button>
+                    <button type = "button" class = "logSearchButtons">Cancel</button>
+            </div>
+            `
+           $('#todaysLog').html(today);
+        }
+    })
     
     
 });
 }
-
 
 
 //---------------------------------------------
@@ -198,6 +263,7 @@ function displayDayLog(){
                 waterIntake: $('#waterIntake option:selected').val(),
                 cleanEating: $('#cleanEating option:selected').val(),
                 exercise: $('#exercise option:selected').val(),
+                user: localStorage.getItem('username')
 
             };
             console.log(logData)
@@ -211,6 +277,7 @@ function displayDayLog(){
                 method: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
+                headers: { authorization: 'Bearer '+localStorage.getItem('authToken') },
                 data: JSON.stringify(logData),
                 success: function(){
                     alert('Item has been saved!');
@@ -427,6 +494,7 @@ $('#todaysLog').on('click', '#editButton', function(){
         $('#cleanEating').val(`0${logArray[0].cleanEating}`);
         $('#communityFeeling').val(`0${logArray[0].communityFeeling}`);
         $('#energy').val(`0${logArray[0].energy}`);
+        $('#gratitude').val(`0${logArray[0].gratitude}`);
         $('#exercise').val(`0${logArray[0].exercise}`);
         $('#waterIntake').val(logArray[0].waterIntake);
         $('#sleepstart-hr').val(logArray[0].sleepStartHr); 
@@ -545,8 +613,8 @@ function login(username, password) {
         method: 'post',
         success: ((token) => {
             localStorage.authToken = token.authToken;
-            localStorage.id = token.id;
-            window.location.href = 'main.html';
+            localStorage.username = username;
+            window.location.href = '/all';
         }),
         error: () => {
             $('#login-error').html('Please enter a valid username and password');
@@ -623,4 +691,3 @@ function listenForSignUpButton() {
     listenForLogin();
     listenForSignUpButton();
     listenForLogoutButton();
-//    listenForDemoButton();
