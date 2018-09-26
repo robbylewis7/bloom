@@ -59,7 +59,7 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/logs', jwtAuth, (req, res) => {
-      Log.find()
+      Log.find({user: req.user.username})
         .sort({ date: -1 })
         .then(logs => {
             res.status(200).json({
@@ -73,7 +73,7 @@ app.get('/logs', jwtAuth, (req, res) => {
 });
         
         
-app.get('/logs/:id', (req, res) => {
+app.get('/logs/:id', jwtAuth, (req, res) => {
   Log.findById(req.params.id)
     .then(log => res.json(log.serialize()))
     .catch(err => {
@@ -84,7 +84,14 @@ app.get('/logs/:id', (req, res) => {
 
 app.get('/logs/user/:user', (req, res) => { 
     Log.find({user: req.params.user})
-        .then(log => {res.json(log)})
+    .sort({ date: -1 })
+        .then(logs => {
+              res.status(200).json({
+              logs: logs.map(log => log.serialize())
+
+        });
+
+      })
         .catch(err => { 
         console.error(err); res.status(500).json({ message: 'Internal server error' }); }); });
 
@@ -101,7 +108,7 @@ app.post('/logs', jwtAuth, (req, res) => {
     }
   }
 
-Log.find({ date: req.body.date }).then(log => {
+Log.find({date: req.body.date, user: req.user.username}).then(log => {
     if (log.length !== 0) {
       return res.status(400).send('A log with this date already exists');
     } else {

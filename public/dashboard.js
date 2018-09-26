@@ -1,38 +1,59 @@
+////////////////////
+//Sleep Total Chart
+////////////////////
+
 
 function sleepTotal(){
 let logDates = [];
 let sleepLogged = [];
     
-function displayDates() {
-    $.getJSON('/logs', function(data) {
-     console.log(data);
-        let dates = data.logs
+    
+    
+function displayDates() {    
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+           let dates = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
             for (var i = 0; i < dates.length; i++){
-            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`)
+};
     }
-        
-                    console.log(logDates.reverse());
+        })
+    }
 
-                    
-});
-}
+
 displayDates();
 
+
 function displaySleep() {
-    $.getJSON('/logs', function(data) {
-     console.log(data.logs[0].sleepTotal);
-        let sleep = data.logs
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+        let sleep = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
             for (var i = 0; i < sleep.length; i++){
             sleepLogged.push(sleep[i].sleepTotal);
     }
         
-                    console.log(sleepLogged.reverse());
 
                     
-});
+}});
 }
 
 displaySleep();
+    
+
 
 
 var ctx = $("#myChart");
@@ -46,6 +67,7 @@ var stackedLine = new Chart(ctx, {
         data: sleepLogged,
         label: "Sleep Total",
         borderColor: '#FE9985',
+        backgroundColor: '#fff',
         fill: false
       }
     ]
@@ -54,7 +76,8 @@ var stackedLine = new Chart(ctx, {
     responseive: true,
     title: {
       display: true,
-      text: 'Total Logged Water Intake'
+      text: 'Total Sleep per Day',
+      fontSize: 18,
     },
       scales: {
         xAxes: [{
@@ -65,6 +88,9 @@ var stackedLine = new Chart(ctx, {
         yAxes: [{
             gridLines: {
                 drawOnChartArea: false
+            },
+            ticks: {
+                beginAtZero: true
             }
         }]
     }
@@ -75,54 +101,77 @@ var stackedLine = new Chart(ctx, {
 sleepTotal();
 
 
+////////////////////
+//Clean Eating Total Chart
+////////////////////
 
-function waterIntake(){
+
+
+
+function cleanEating(){
 let logDates = [];
-let loggedWater = [];
+let cleanLogged = [];
     
-function displayDates() {
-    $.getJSON('/logs', function(data) {
-     console.log(data);
-        let dates = data.logs
+    
+    
+function displayDates() {    
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+           let dates = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
             for (var i = 0; i < dates.length; i++){
             logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
     }
         
-                    console.log(logDates.reverse());
 
-                    
-});
+        }
+    })
 }
+
 displayDates();
 
-function displayWater() {
-    $.getJSON('/logs', function(data) {
-     console.log(data.logs[0].waterIntake);
-        let water = data.logs
-            for (var i = 0; i < water.length; i++){
-            loggedWater.push(water[i].waterIntake);
+
+function displayClean() {
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+        let cleanEating = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < cleanEating.length; i++){
+            cleanLogged.push(cleanEating[i].cleanEating);
     }
         
-                    console.log(loggedWater.reverse());
 
                     
-});
+}});
 }
 
-displayWater();
+displayClean();
 
 
-var ctx = $("#waterIntake");
+var ctx = $("#cleanEating");
 
 
 var stackedLine = new Chart(ctx, {
  type: 'line',
-  data: {
+    data: {
     labels: logDates,
     datasets: [{ 
-        data: loggedWater,
-        label: "Water Intake",
-        borderColor: "#FE9985",
+        data: cleanLogged,
+        label: "Clean Eating Total",
+        borderColor: '#FE9985',
+        backgroundColor: '#fff',
         fill: false
       }
     ]
@@ -131,7 +180,8 @@ var stackedLine = new Chart(ctx, {
     responseive: true,
     title: {
       display: true,
-      text: 'Total Logged Water Intake'
+      text: 'Clean Eating Rating per Day',
+      fontSize: 18,
     },
       scales: {
         xAxes: [{
@@ -142,6 +192,9 @@ var stackedLine = new Chart(ctx, {
         yAxes: [{
             gridLines: {
                 drawOnChartArea: false
+            },
+            ticks: {
+                beginAtZero: true
             }
         }]
     }
@@ -149,43 +202,275 @@ var stackedLine = new Chart(ctx, {
 });
 }
 
-waterIntake();
+cleanEating();
 
+
+
+////////////////////
+//Energy Total Chart
+////////////////////
+
+
+
+
+function energy(){
+let logDates = [];
+let energyLogged = [];
+    
+    
+    
+function displayDates() {    
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+           let dates = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < dates.length; i++){
+            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+    }
+        
+
+        }
+    })
+}
+
+displayDates();
+
+
+function displayEnergy() {
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+        let energy = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < energy.length; i++){
+            energyLogged.push(energy[i].energy);
+    }
+        
+
+                    
+}});
+}
+
+displayEnergy();
+
+
+var ctx = $("#energy");
+
+
+var stackedLine = new Chart(ctx, {
+ type: 'line',
+    data: {
+    labels: logDates,
+    datasets: [{ 
+        data: energyLogged,
+        label: "Energy Total",
+        borderColor: '#FE9985',
+        backgroundColor: '#fff',
+        fill: false
+      }
+    ]
+  },
+  options: {
+    responseive: true,
+    title: {
+      display: true,
+      text: 'Energy Rating per Day',
+      fontSize: 18,
+    },
+      scales: {
+        xAxes: [{
+            gridLines: {
+                drawOnChartArea: false
+            }
+        }],
+        yAxes: [{
+            gridLines: {
+                drawOnChartArea: false
+            },
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+  }
+});
+}
+
+energy();
+
+
+
+
+////////////////////
+//Exercise Total Chart
+////////////////////
+
+
+
+
+function exercise(){
+let logDates = [];
+let exerciseLogged = [];
+    
+    
+    
+function displayDates() {    
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+           let dates = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < dates.length; i++){
+            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+    }
+        
+
+        }
+    })
+}
+
+displayDates();
+
+
+function displayExercise() {
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+        let exercise = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < exercise.length; i++){
+            exerciseLogged.push(exercise[i].exercise);
+    }
+        
+
+                    
+}});
+}
+
+displayExercise();
+
+
+var ctx = $("#exercise");
+
+
+var stackedLine = new Chart(ctx, {
+ type: 'line',
+    data: {
+    labels: logDates,
+    datasets: [{ 
+        data: exerciseLogged,
+        label: "Exercise Total",
+        borderColor: '#FE9985',
+        backgroundColor: '#fff',
+        fill: false
+      }
+    ]
+  },
+  options: {
+    responseive: true,
+    title: {
+      display: true,
+      text: 'Exercise Rating per Day',
+      fontSize: 18,
+    },
+      scales: {
+        xAxes: [{
+            gridLines: {
+                drawOnChartArea: false
+            }
+        }],
+        yAxes: [{
+            gridLines: {
+                drawOnChartArea: false
+            },
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+  }
+});
+}
+
+exercise();
+
+
+
+////////////////////
+//Stress Total Chart
+////////////////////
 
 
 
 
 function stress(){
 let logDates = [];
-let loggedStress = [];
+let stressLogged = [];
     
-function displayDates() {
-    $.getJSON('/logs', function(data) {
-     console.log(data);
-        let dates = data.logs
+    
+    
+function displayDates() {    
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+           let dates = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
             for (var i = 0; i < dates.length; i++){
             logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
     }
         
-                    console.log(logDates.reverse());
 
-                    
-});
+        }
+    })
 }
+
 displayDates();
 
+
 function displayStress() {
-    $.getJSON('/logs', function(data) {
-     console.log(data.logs[0].stress);
-        let stress = data.logs
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+        let stress = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
             for (var i = 0; i < stress.length; i++){
-            loggedStress.push(stress[i].stress);
+            stressLogged.push(stress[i].stress);
     }
         
-                    console.log(loggedStress.reverse());
 
                     
-});
+}});
 }
 
 displayStress();
@@ -196,12 +481,13 @@ var ctx = $("#stress");
 
 var stackedLine = new Chart(ctx, {
  type: 'line',
-  data: {
+    data: {
     labels: logDates,
     datasets: [{ 
-        data: loggedStress,
-        label: "Stress Levels",
-        borderColor: "#FE9985",
+        data: stressLogged,
+        label: "Stress Total",
+        borderColor: '#FE9985',
+        backgroundColor: '#fff',
         fill: false
       }
     ]
@@ -210,7 +496,8 @@ var stackedLine = new Chart(ctx, {
     responseive: true,
     title: {
       display: true,
-      text: 'Total Logged Stress'
+      text: 'Stress Rating per Day',
+      fontSize: 18,
     },
       scales: {
         xAxes: [{
@@ -221,6 +508,9 @@ var stackedLine = new Chart(ctx, {
         yAxes: [{
             gridLines: {
                 drawOnChartArea: false
+            },
+            ticks: {
+                beginAtZero: true
             }
         }]
     }
@@ -232,3 +522,106 @@ stress();
 
 
 
+
+////////////////////
+//Water Intake Total Chart
+////////////////////
+
+
+
+
+function waterIntake(){
+let logDates = [];
+let waterLogged = [];
+    
+    
+    
+function displayDates() {    
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+           let dates = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < dates.length; i++){
+            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+    }
+        
+
+        }
+    })
+}
+
+displayDates();
+
+
+function waterIntake() {
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+        let waterIntake = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < waterIntake.length; i++){
+            waterLogged.push(waterIntake[i].waterIntake);
+    }
+        
+
+                    
+}});
+}
+
+waterIntake();
+
+
+var ctx = $("#waterIntake");
+
+
+var stackedLine = new Chart(ctx, {
+ type: 'line',
+    data: {
+    labels: logDates,
+    datasets: [{ 
+        data: waterLogged,
+        label: "Water Intake Total",
+        borderColor: '#FE9985',
+        backgroundColor: '#fff',
+        fill: false
+      }
+    ]
+  },
+  options: {
+    responseive: true,
+    title: {
+      display: true,
+      text: 'Water Intake per Day',
+      fontSize: 18,
+    },
+      scales: {
+        xAxes: [{
+            gridLines: {
+                drawOnChartArea: false
+            }
+        }],
+        yAxes: [{
+            gridLines: {
+                drawOnChartArea: false
+            },
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+  }
+});
+}
+
+waterIntake();
