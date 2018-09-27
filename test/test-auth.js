@@ -1,12 +1,12 @@
 'use strict';
-
+global.DATABASE_URL = 'mongodb://localhost/jwt-auth-demo-test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 
 const { app, runServer, closeServer } = require('../server');
 const { User } = require('../users');
-const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
+const { JWT_SECRET } = require('../config');
 
 const expect = chai.expect;
 
@@ -22,20 +22,21 @@ describe('Auth endpoints', function () {
   const lastName = 'User';
 
   before(function () {
-    return runServer(TEST_DATABASE_URL);
+    return runServer(global.DATABASE_URL);
   });
 
   after(function () {
     return closeServer();
   });
 
-  beforeEach(function () {
+  beforeEach(function() {
     return User.hashPassword(password).then(password =>
       User.create({
         username,
+        password,
         firstName,
         lastName
-    })
+      })
     );
   });
 
@@ -64,7 +65,7 @@ describe('Auth endpoints', function () {
       return chai
         .request(app)
         .post('/api/auth/login')
-        .send({ username: 'wrongUsername', password })
+        .send({ username: 'wrongUsername', password })        
         .then(() =>
           expect.fail(null, null, 'Request should not succeed')
         )
@@ -171,12 +172,12 @@ describe('Auth endpoints', function () {
             firstName,
             lastName
           },
+          exp: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
         },
         JWT_SECRET,
         {
           algorithm: 'HS256',
-          subject: username,
-          expiresIn: '1ms' // Expired 1 milisecond ago
+          subject: username
         }
       );
 
