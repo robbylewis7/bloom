@@ -578,26 +578,28 @@ function login(username, password) {
 }
 
 function listenForLogoutButton() {
-    $('#logout').on('click', 'button', function (event) {
-        event.preventDefault();
-
-        $.ajax({
-            url: '/api/auth/logout',
-            headers: {
-                'content-type': 'application/json',
-                'authorization': 'bearer ' + localStorage.authToken
-            },
-            type: 'GET',
-            success: () => {
-                delete localStorage.authToken;
-                delete localStorage.id;
-                window.location = '/';
-                
-            },
-            error: () => {
-                console.error('Something went wrong');
-            }
-        });
+    $('header').on('click', '#logout', function (event) {
+        console.log('click');
+         localStorage.clear(); 
+         window.location = '/';
+//
+//        $.ajax({
+//            url: '/api/auth/logout',
+//            headers: {
+//                'content-type': 'application/json',
+//                'authorization': 'bearer ' + localStorage.authToken
+//            },
+//            type: 'GET',
+//            success: () => {
+//                delete localStorage.authToken;
+//                delete localStorage.id;
+//                window.location = '/';
+//                
+//            },
+//            error: () => {
+//                console.error('Something went wrong');
+//            }
+//        });
     });
 }
 
@@ -629,6 +631,7 @@ function listenForSignUpButton() {
         });
     });
 }
+
 
 
 

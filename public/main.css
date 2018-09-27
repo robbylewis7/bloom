@@ -20,9 +20,8 @@ header{
     width: 100%;
     height: 25%;
     display: flex;
-    justify-content: space-between;
+    justify-content:space-between;
     align-items: flex-start;
-    text-transform: uppercase;
 }
 
 #createNewIcon{
@@ -48,15 +47,28 @@ header a:hover{
     border-bottom: 2px solid white;
 }
 
+
 #logo{
     height: 60px;
     height: 60px;
-    position:absolute;
-    left: 130px;
-    top: 5px;
 }
 
-html, body{
+
+
+#logoArea{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#logout{
+    float: right;
+    width: 50px;
+    height:25px;
+    margin-right: 15px;
+}
+
+body{
   background: #FE9985;
   width: 100%;
   margin: 0;
@@ -284,6 +296,17 @@ body {
 }
 
 
+@media only screen and (max-width: 920px) {
+
+    #log-create-form, #log-edit-form{
+    width: 60%;
+}
+    
+    
+}
+
+
+
 @media only screen and (max-width: 800px) {
     
    #logSearch todaysLog{
@@ -300,7 +323,14 @@ body {
     
     #instructions{
         font-size: 30px;
+        margin-bottom: 20px;
     }
+    
+    #searchNew img, #createNew img{
+    height: 120px;
+    width: 120px;
+    margin: 20px;
+}
     
     .buttons{
         width: 80px;
@@ -310,4 +340,64 @@ body {
     #search-date{
         width: 50%;
     }
+}
+
+@media only screen and (max-width: 768px) {
+header li{
+   display: block;
+   padding:2px 0px;
+   font-size: 14px;
+
+}
+    
+    .nav{
+        margin-right: 5px;
+    }
+    
+    .logo{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 674px) {
+
+  #instructions{
+        font-size: 18px;
+        padding-top: 80px;
+    }
+
+}
+
+
+@media only screen and (max-width: 610px) {
+
+#log-create-form, #log-edit-form{
+    width: 80%;
+    display: flex;
+    font-size: 14px;
+
+}
+
+
+#logArea{
+        padding: 120px;
+    }
+    
+    
+}
+
+@media only screen and (max-width: 414px) {
+
+  #instructions{
+        font-size: 14px;
+        padding-top: 100px;
+    }
+
+
+    
+    #log-create-form, #log-edit-form{
+    width: 100%;
+}
+  
+    
 }
