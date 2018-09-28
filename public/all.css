@@ -33,17 +33,20 @@ header a:hover{
 }
 
 
-.logo{
-    margin-left: 20px;
-}
+
 
 #logo{
     height: 60px;
     height: 60px;
-    position:absolute;
-    left: 130px;
-    top: 5px;
 }
+
+#logoArea{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-left: 40px;
+}
+
 
 #logout{
     float: right;
@@ -177,6 +180,11 @@ header li{
     .nav{
         margin-right: 5px;
     }
+    
+                .logo{
+        display: none;
+    }
+    
 }
-}
+
 

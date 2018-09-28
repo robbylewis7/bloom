@@ -59,6 +59,8 @@ header a:hover{
     display: flex;
     justify-content: center;
     align-content: center;
+    margin-left: 20px;
+
 }
 
 #logout{
@@ -343,20 +345,24 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
+
+
+            .logo{
+        display: none;
+    }
+
 header li{
    display: block;
    padding:2px 0px;
    font-size: 14px;
 
 }
-    
     .nav{
         margin-right: 5px;
     }
+}
     
-    .logo{
-        display: none;
-    }
+
 }
 
 @media only screen and (max-width: 674px) {

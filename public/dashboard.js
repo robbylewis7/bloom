@@ -55,16 +55,15 @@ displaySleep();
     
 
 
-
 var ctx = $("#myChart");
 
-
+    
 var stackedLine = new Chart(ctx, {
  type: 'line',
     data: {
     labels: logDates,
     datasets: [{ 
-        data: sleepLogged,
+        data: [],
         label: "Sleep Total",
         borderColor: '#FE9985',
         backgroundColor: '#fff',
@@ -74,6 +73,9 @@ var stackedLine = new Chart(ctx, {
   },
   options: {
     responseive: true,
+    legend: {
+        display: false
+    },
     title: {
       display: true,
       text: 'Total Sleep per Day',
@@ -86,6 +88,12 @@ var stackedLine = new Chart(ctx, {
             }
         }],
         yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Sleep (Hours)',
+                fontSize: 14,
+        
+      },
             gridLines: {
                 drawOnChartArea: false
             },
@@ -96,6 +104,22 @@ var stackedLine = new Chart(ctx, {
     }
   }
 });
+    
+    
+function addData(chart, label, color, data) {
+		chart.data.datasets.push({
+	    label: label,
+      backgroundColor: color,
+      data: data
+    });
+    chart.update();
+}
+
+// inserting the new dataset after 3 seconds
+setTimeout(function() {
+	addData(stackedLine, '', '#FE9985', sleepLogged);
+}, 500);
+
 }
 
 sleepTotal();
@@ -113,7 +137,7 @@ let logDates = [];
 let cleanLogged = [];
     
     
-    
+console.log(cleanLogged)
 function displayDates() {    
     $.ajax({
         url: '/logs/user/'+localStorage.getItem('username'),
@@ -168,9 +192,9 @@ var stackedLine = new Chart(ctx, {
     data: {
     labels: logDates,
     datasets: [{ 
-        data: cleanLogged,
+        data: [],
         label: "Clean Eating Total",
-        borderColor: '#FE9985',
+        borderColor: '#81B29A',
         backgroundColor: '#fff',
         fill: false
       }
@@ -178,6 +202,9 @@ var stackedLine = new Chart(ctx, {
   },
   options: {
     responseive: true,
+    legend: {
+        display: false
+    },
     title: {
       display: true,
       text: 'Clean Eating Rating per Day',
@@ -190,16 +217,42 @@ var stackedLine = new Chart(ctx, {
             }
         }],
         yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Daily Rating (1-5)',
+                fontSize: 14,
+        
+      },
             gridLines: {
                 drawOnChartArea: false
             },
             ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                max: 5,
+                stepSize: 1,
             }
         }]
     }
   }
 });
+    
+    
+    
+
+function addData(chart, label, color, data) {
+		chart.data.datasets.push({
+	    label: label,
+      backgroundColor: color,
+      data: data
+    });
+    chart.update();
+}
+
+// inserting the new dataset after 3 seconds
+setTimeout(function() {
+	addData(stackedLine, '', '#81B29A', cleanLogged);
+}, 500);
+
 }
 
 cleanEating();
@@ -273,9 +326,9 @@ var stackedLine = new Chart(ctx, {
     data: {
     labels: logDates,
     datasets: [{ 
-        data: energyLogged,
+        data: [],
         label: "Energy Total",
-        borderColor: '#FE9985',
+        borderColor: '#6D98BA',
         backgroundColor: '#fff',
         fill: false
       }
@@ -283,6 +336,9 @@ var stackedLine = new Chart(ctx, {
   },
   options: {
     responseive: true,
+    legend: {
+        display: false
+    },
     title: {
       display: true,
       text: 'Energy Rating per Day',
@@ -295,16 +351,41 @@ var stackedLine = new Chart(ctx, {
             }
         }],
         yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Daily Rating (1-5)',
+                fontSize: 14,
+        
+      },
             gridLines: {
                 drawOnChartArea: false
             },
             ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                max: 5,
+                stepSize: 1,
             }
         }]
     }
   }
 });
+    
+    
+    
+function addData(chart, label, color, data) {
+		chart.data.datasets.push({
+	    label: label,
+      backgroundColor: color,
+      data: data
+    });
+    chart.update();
+}
+
+// inserting the new dataset after 3 seconds
+setTimeout(function() {
+	addData(stackedLine, '', '#6D98BA', energyLogged);
+}, 500);
+    
 }
 
 energy();
@@ -379,9 +460,9 @@ var stackedLine = new Chart(ctx, {
     data: {
     labels: logDates,
     datasets: [{ 
-        data: exerciseLogged,
+        data: [],
         label: "Exercise Total",
-        borderColor: '#FE9985',
+        borderColor: '#99B2DD',
         backgroundColor: '#fff',
         fill: false
       }
@@ -389,6 +470,9 @@ var stackedLine = new Chart(ctx, {
   },
   options: {
     responseive: true,
+    legend: {
+        display: false
+    },
     title: {
       display: true,
       text: 'Exercise Rating per Day',
@@ -401,16 +485,40 @@ var stackedLine = new Chart(ctx, {
             }
         }],
         yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Daily Rating (1-5)',
+                fontSize: 14,
+        
+      },
             gridLines: {
                 drawOnChartArea: false
             },
             ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                max: 5,
+                stepSize: 1,
             }
         }]
     }
   }
 });
+    
+function addData(chart, label, color, data) {
+		chart.data.datasets.push({
+	    label: label,
+      backgroundColor: color,
+      data: data
+    });
+    chart.update();
+}
+
+// inserting the new dataset after 3 seconds
+setTimeout(function() {
+	addData(stackedLine, '', '#99B2DD', exerciseLogged);
+}, 500);
+    
+
 }
 
 exercise();
@@ -484,9 +592,9 @@ var stackedLine = new Chart(ctx, {
     data: {
     labels: logDates,
     datasets: [{ 
-        data: stressLogged,
+        data: [],
         label: "Stress Total",
-        borderColor: '#FE9985',
+        borderColor: '#ADAABF',
         backgroundColor: '#fff',
         fill: false
       }
@@ -494,6 +602,9 @@ var stackedLine = new Chart(ctx, {
   },
   options: {
     responseive: true,
+    legend: {
+        display: false
+    },
     title: {
       display: true,
       text: 'Stress Rating per Day',
@@ -506,17 +617,42 @@ var stackedLine = new Chart(ctx, {
             }
         }],
         yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Daily Rating (1-5)',
+                fontSize: 14,
+        
+      },
             gridLines: {
                 drawOnChartArea: false
             },
             ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                max: 5,
+                stepSize: 1,
             }
         }]
     }
   }
 });
+    
+    
+
+function addData(chart, label, color, data) {
+		chart.data.datasets.push({
+	    label: label,
+      backgroundColor: color,
+      data: data
+    });
+    chart.update();
 }
+
+// inserting the new dataset after 3 seconds
+setTimeout(function() {
+	addData(stackedLine, '', '#ADAABF', stressLogged);
+}, 500);
+}
+
 
 stress();
 
@@ -590,9 +726,9 @@ var stackedLine = new Chart(ctx, {
     data: {
     labels: logDates,
     datasets: [{ 
-        data: waterLogged,
+        data: [],
         label: "Water Intake Total",
-        borderColor: '#FE9985',
+        borderColor: '#C0E8F9',
         backgroundColor: '#fff',
         fill: false
       }
@@ -600,6 +736,9 @@ var stackedLine = new Chart(ctx, {
   },
   options: {
     responseive: true,
+    legend: {
+        display: false
+    },
     title: {
       display: true,
       text: 'Water Intake per Day',
@@ -612,16 +751,175 @@ var stackedLine = new Chart(ctx, {
             }
         }],
         yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Water (oz)',
+                fontSize: 14,
+        
+      },
             gridLines: {
                 drawOnChartArea: false
             },
             ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                max: 80,
+                stepSize: 16,
+            }
+        }]
+    }
+  }
+}); 
+ 
+    
+    
+function addData(chart, label, color, data) {
+		chart.data.datasets.push({
+	    label: label,
+      backgroundColor: color,
+      data: data
+    });
+    chart.update();
+}
+
+// inserting the new dataset after 3 seconds
+setTimeout(function() {
+	addData(stackedLine, '', '#C0E8F9', waterLogged);
+}, 500);
+
+}
+
+waterIntake();
+
+
+
+
+////////////////////
+//Social support Total Chart
+////////////////////
+
+
+
+
+function socialSupport(){
+let logDates = [];
+let socialLogged = [];
+
+    
+    
+    
+function displayDates() {    
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+           let dates = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < dates.length; i++){
+            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+    }
+        
+
+        }
+    })
+}
+
+displayDates();
+
+
+function socialSupport() {
+    $.ajax({
+        url: '/logs/user/'+localStorage.getItem('username'),
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            authorization: 'Bearer '+localStorage.getItem('authToken')
+        },
+        success: function(data) {
+        let socialSupport = data.logs.sort(function(a,b){
+            return new Date(a.date) - new Date(b.date)})
+            for (var i = 0; i < socialSupport.length; i++){
+            socialLogged.push(socialSupport[i].communityFeeling);
+    }
+        
+
+                    
+}});
+}
+
+socialSupport();
+
+
+var ctx = $("#socialSupport");
+
+
+var stackedLine = new Chart(ctx, {
+ type: 'line',
+    data: {
+    labels: logDates,
+    datasets: [{ 
+        data: [],
+        label: "Social Support Rating",
+        borderColor: '#FE5F55',
+        backgroundColor: '#fff',
+        fill: false
+      }
+    ]
+  },
+  options: {
+    responseive: true,
+    legend: {
+        display: false
+    },
+    title: {
+      display: true,
+      text: 'Social Support Rating per Day',
+      fontSize: 18,
+    },
+      scales: {
+        xAxes: [{
+            gridLines: {
+                drawOnChartArea: false
+            }
+        }],
+        yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Daily Rating (1-5)',
+                fontSize: 14,
+        
+      },
+            gridLines: {
+                drawOnChartArea: false
+            },
+            ticks: {
+                beginAtZero: true,
+                max: 5,
+                stepSize: 1,
             }
         }]
     }
   }
 });
+
+
+function addData(chart, label, color, data) {
+		chart.data.datasets.push({
+	    label: label,
+      backgroundColor: color,
+      data: data
+    });
+    chart.update();
 }
 
-waterIntake();
+// inserting the new dataset after 3 seconds
+setTimeout(function() {
+	addData(stackedLine, '', '#8E3B46', socialLogged);
+}, 500);
+    
+}
+
+socialSupport();

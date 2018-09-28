@@ -77,6 +77,17 @@ $('#logFormation').on('click', '#cancelButton', function(){
 
 })
 
+//$('#menuDropdown').on('click', function(){
+//    $('#menuDropdown').hide();
+//    $('#menu').show();
+//    $('#menuCancel').show();
+//})
+//
+//$('#menuCancel').on('click', function(){
+//    $('#menuCancel').hide();
+//    $('#menu').hide();
+//    $('#menuDropdown').show();
+//})
 //---------------------------------------------
 //Default to today for new logs
 //---------------------------------------------
@@ -125,7 +136,7 @@ function displayResults() {
                     <p id = "gratitude">Gratitude: ${data.gratitude}</p>
                     <p id = "energy">Energy: ${data.energy}</p>
                     <p id = "exercise">Exercise: ${data.exercise}</p>
-                    <p id = "community">Strength of Community: ${data.communityFeeling}</p>
+                    <p id = "community">Social Support: ${data.communityFeeling}</p>
                     </div>
                     `
             })
@@ -582,24 +593,6 @@ function listenForLogoutButton() {
         console.log('click');
          localStorage.clear(); 
          window.location = '/';
-//
-//        $.ajax({
-//            url: '/api/auth/logout',
-//            headers: {
-//                'content-type': 'application/json',
-//                'authorization': 'bearer ' + localStorage.authToken
-//            },
-//            type: 'GET',
-//            success: () => {
-//                delete localStorage.authToken;
-//                delete localStorage.id;
-//                window.location = '/';
-//                
-//            },
-//            error: () => {
-//                console.error('Something went wrong');
-//            }
-//        });
     });
 }
 
