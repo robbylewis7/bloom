@@ -4,121 +4,121 @@
 
 
 function sleepTotal(){
-let logDates = [];
-let sleepLogged = [];
-    
-    
-    
-function displayDates() {    
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-           let dates = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < dates.length; i++){
-            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`)
-};
-    }
+    let logDates = [];
+    let sleepLogged = [];
+
+
+
+    function displayDates() {    
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
+            },
+            success: function(data) {
+                let dates = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < dates.length; i++){
+                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`)
+                };
+            }
         })
     }
 
 
-displayDates();
+    displayDates();
 
 
-function displaySleep() {
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-        let sleep = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < sleep.length; i++){
-            sleepLogged.push(sleep[i].sleepTotal);
-    }
-        
-
-                    
-}});
-}
-
-displaySleep();
-    
-
-
-var ctx = $("#myChart");
-
-    
-var stackedLine = new Chart(ctx, {
- type: 'line',
-    data: {
-    labels: logDates,
-    datasets: [{ 
-        data: [],
-        label: "Sleep Total",
-        borderColor: '#FE9985',
-        backgroundColor: '#fff',
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responseive: true,
-    legend: {
-        display: false
-    },
-    title: {
-      display: true,
-      text: 'Total Sleep per Day',
-      fontSize: 18,
-    },
-      scales: {
-        xAxes: [{
-            gridLines: {
-                drawOnChartArea: false
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Sleep (Hours)',
-                fontSize: 14,
-        
-      },
-            gridLines: {
-                drawOnChartArea: false
+    function displaySleep() {
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
             },
-            ticks: {
-                beginAtZero: true
-            }
-        }]
-    }
-  }
-});
-    
-    
-function addData(chart, label, color, data) {
-		chart.data.datasets.push({
-	    label: label,
-      backgroundColor: color,
-      data: data
-    });
-    chart.update();
-}
+            success: function(data) {
+                let sleep = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < sleep.length; i++){
+                    sleepLogged.push(sleep[i].sleepTotal);
+                }
 
-// inserting the new dataset after 3 seconds
-setTimeout(function() {
-	addData(stackedLine, '', '#FE9985', sleepLogged);
-}, 500);
+
+
+            }});
+    }
+
+    displaySleep();
+
+
+
+    var ctx = $("#myChart");
+
+
+    var stackedLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: logDates,
+            datasets: [{ 
+                data: [],
+                label: "Sleep Total",
+                borderColor: '#FE9985',
+                backgroundColor: '#fff',
+                fill: false
+            }
+                      ]
+        },
+        options: {
+            responseive: true,
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Total Sleep per Day',
+                fontSize: 18,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Sleep (Hours)',
+                        fontSize: 14,
+
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+
+    function addData(chart, label, color, data) {
+        chart.data.datasets.push({
+            label: label,
+            backgroundColor: color,
+            data: data
+        });
+        chart.update();
+    }
+
+    // inserting the new dataset after 3 seconds
+    setTimeout(function() {
+        addData(stackedLine, '', '#FE9985', sleepLogged);
+    }, 500);
 
 }
 
@@ -133,125 +133,125 @@ sleepTotal();
 
 
 function cleanEating(){
-let logDates = [];
-let cleanLogged = [];
-    
-    
-console.log(cleanLogged)
-function displayDates() {    
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-           let dates = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < dates.length; i++){
-            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
-    }
-        
-
-        }
-    })
-}
-
-displayDates();
+    let logDates = [];
+    let cleanLogged = [];
 
 
-function displayClean() {
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-        let cleanEating = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < cleanEating.length; i++){
-            cleanLogged.push(cleanEating[i].cleanEating);
-    }
-        
-
-                    
-}});
-}
-
-displayClean();
-
-
-var ctx = $("#cleanEating");
-
-
-var stackedLine = new Chart(ctx, {
- type: 'line',
-    data: {
-    labels: logDates,
-    datasets: [{ 
-        data: [],
-        label: "Clean Eating Total",
-        borderColor: '#81B29A',
-        backgroundColor: '#fff',
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responseive: true,
-    legend: {
-        display: false
-    },
-    title: {
-      display: true,
-      text: 'Clean Eating Rating per Day',
-      fontSize: 18,
-    },
-      scales: {
-        xAxes: [{
-            gridLines: {
-                drawOnChartArea: false
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Daily Rating (1-5)',
-                fontSize: 14,
-        
-      },
-            gridLines: {
-                drawOnChartArea: false
+    console.log(cleanLogged)
+    function displayDates() {    
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
             },
-            ticks: {
-                beginAtZero: true,
-                max: 5,
-                stepSize: 1,
+            success: function(data) {
+                let dates = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < dates.length; i++){
+                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                }
+
+
             }
-        }]
+        })
     }
-  }
-});
-    
-    
-    
 
-function addData(chart, label, color, data) {
-		chart.data.datasets.push({
-	    label: label,
-      backgroundColor: color,
-      data: data
+    displayDates();
+
+
+    function displayClean() {
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
+            },
+            success: function(data) {
+                let cleanEating = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < cleanEating.length; i++){
+                    cleanLogged.push(cleanEating[i].cleanEating);
+                }
+
+
+
+            }});
+    }
+
+    displayClean();
+
+
+    var ctx = $("#cleanEating");
+
+
+    var stackedLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: logDates,
+            datasets: [{ 
+                data: [cleanLogged],
+                label: "Clean Eating Total",
+                borderColor: '#81B29A',
+                backgroundColor: '#fff',
+                fill: false
+            }
+                      ]
+        },
+        options: {
+            responseive: true,
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Clean Eating Rating per Day',
+                fontSize: 18,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Daily Rating (1-5)',
+                        fontSize: 14,
+
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 5,
+                        stepSize: 1,
+                    }
+                }]
+            }
+        }
     });
-    chart.update();
-}
 
-// inserting the new dataset after 3 seconds
-setTimeout(function() {
-	addData(stackedLine, '', '#81B29A', cleanLogged);
-}, 500);
+
+
+
+    function addData(chart, label, color, data) {
+        chart.data.datasets.push({
+            label: label,
+            backgroundColor: color,
+            data: data
+        });
+        chart.update();
+    }
+
+    // inserting the new dataset after 3 seconds
+    setTimeout(function() {
+        addData(stackedLine, '', '#81B29A', cleanLogged);
+    }, 500);
 
 }
 
@@ -267,125 +267,125 @@ cleanEating();
 
 
 function energy(){
-let logDates = [];
-let energyLogged = [];
-    
-    
-    
-function displayDates() {    
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-           let dates = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < dates.length; i++){
-            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
-    }
-        
-
-        }
-    })
-}
-
-displayDates();
+    let logDates = [];
+    let energyLogged = [];
 
 
-function displayEnergy() {
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-        let energy = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < energy.length; i++){
-            energyLogged.push(energy[i].energy);
-    }
-        
 
-                    
-}});
-}
-
-displayEnergy();
-
-
-var ctx = $("#energy");
-
-
-var stackedLine = new Chart(ctx, {
- type: 'line',
-    data: {
-    labels: logDates,
-    datasets: [{ 
-        data: [],
-        label: "Energy Total",
-        borderColor: '#6D98BA',
-        backgroundColor: '#fff',
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responseive: true,
-    legend: {
-        display: false
-    },
-    title: {
-      display: true,
-      text: 'Energy Rating per Day',
-      fontSize: 18,
-    },
-      scales: {
-        xAxes: [{
-            gridLines: {
-                drawOnChartArea: false
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Daily Rating (1-5)',
-                fontSize: 14,
-        
-      },
-            gridLines: {
-                drawOnChartArea: false
+    function displayDates() {    
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
             },
-            ticks: {
-                beginAtZero: true,
-                max: 5,
-                stepSize: 1,
-            }
-        }]
-    }
-  }
-});
-    
-    
-    
-function addData(chart, label, color, data) {
-		chart.data.datasets.push({
-	    label: label,
-      backgroundColor: color,
-      data: data
-    });
-    chart.update();
-}
+            success: function(data) {
+                let dates = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < dates.length; i++){
+                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                }
 
-// inserting the new dataset after 3 seconds
-setTimeout(function() {
-	addData(stackedLine, '', '#6D98BA', energyLogged);
-}, 500);
-    
+
+            }
+        })
+    }
+
+    displayDates();
+
+
+    function displayEnergy() {
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
+            },
+            success: function(data) {
+                let energy = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < energy.length; i++){
+                    energyLogged.push(energy[i].energy);
+                }
+
+
+
+            }});
+    }
+
+    displayEnergy();
+
+
+    var ctx = $("#energy");
+
+
+    var stackedLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: logDates,
+            datasets: [{ 
+                data: [],
+                label: "Energy Total",
+                borderColor: '#6D98BA',
+                backgroundColor: '#fff',
+                fill: false
+            }
+                      ]
+        },
+        options: {
+            responseive: true,
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Energy Rating per Day',
+                fontSize: 18,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Daily Rating (1-5)',
+                        fontSize: 14,
+
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 5,
+                        stepSize: 1,
+                    }
+                }]
+            }
+        }
+    });
+
+
+
+    function addData(chart, label, color, data) {
+        chart.data.datasets.push({
+            label: label,
+            backgroundColor: color,
+            data: data
+        });
+        chart.update();
+    }
+
+    // inserting the new dataset after 3 seconds
+    setTimeout(function() {
+        addData(stackedLine, '', '#6D98BA', energyLogged);
+    }, 500);
+
 }
 
 energy();
@@ -401,123 +401,123 @@ energy();
 
 
 function exercise(){
-let logDates = [];
-let exerciseLogged = [];
-    
-    
-    
-function displayDates() {    
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-           let dates = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < dates.length; i++){
-            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
-    }
-        
-
-        }
-    })
-}
-
-displayDates();
+    let logDates = [];
+    let exerciseLogged = [];
 
 
-function displayExercise() {
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-        let exercise = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < exercise.length; i++){
-            exerciseLogged.push(exercise[i].exercise);
-    }
-        
 
-                    
-}});
-}
-
-displayExercise();
-
-
-var ctx = $("#exercise");
-
-
-var stackedLine = new Chart(ctx, {
- type: 'line',
-    data: {
-    labels: logDates,
-    datasets: [{ 
-        data: [],
-        label: "Exercise Total",
-        borderColor: '#99B2DD',
-        backgroundColor: '#fff',
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responseive: true,
-    legend: {
-        display: false
-    },
-    title: {
-      display: true,
-      text: 'Exercise Rating per Day',
-      fontSize: 18,
-    },
-      scales: {
-        xAxes: [{
-            gridLines: {
-                drawOnChartArea: false
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Daily Rating (1-5)',
-                fontSize: 14,
-        
-      },
-            gridLines: {
-                drawOnChartArea: false
+    function displayDates() {    
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
             },
-            ticks: {
-                beginAtZero: true,
-                max: 5,
-                stepSize: 1,
-            }
-        }]
-    }
-  }
-});
-    
-function addData(chart, label, color, data) {
-		chart.data.datasets.push({
-	    label: label,
-      backgroundColor: color,
-      data: data
-    });
-    chart.update();
-}
+            success: function(data) {
+                let dates = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < dates.length; i++){
+                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                }
 
-// inserting the new dataset after 3 seconds
-setTimeout(function() {
-	addData(stackedLine, '', '#99B2DD', exerciseLogged);
-}, 500);
-    
+
+            }
+        })
+    }
+
+    displayDates();
+
+
+    function displayExercise() {
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
+            },
+            success: function(data) {
+                let exercise = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < exercise.length; i++){
+                    exerciseLogged.push(exercise[i].exercise);
+                }
+
+
+
+            }});
+    }
+
+    displayExercise();
+
+
+    var ctx = $("#exercise");
+
+
+    var stackedLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: logDates,
+            datasets: [{ 
+                data: [],
+                label: "Exercise Total",
+                borderColor: '#99B2DD',
+                backgroundColor: '#fff',
+                fill: false
+            }
+                      ]
+        },
+        options: {
+            responseive: true,
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Exercise Rating per Day',
+                fontSize: 18,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Daily Rating (1-5)',
+                        fontSize: 14,
+
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 5,
+                        stepSize: 1,
+                    }
+                }]
+            }
+        }
+    });
+
+    function addData(chart, label, color, data) {
+        chart.data.datasets.push({
+            label: label,
+            backgroundColor: color,
+            data: data
+        });
+        chart.update();
+    }
+
+    // inserting the new dataset after 3 seconds
+    setTimeout(function() {
+        addData(stackedLine, '', '#99B2DD', exerciseLogged);
+    }, 500);
+
 
 }
 
@@ -533,124 +533,124 @@ exercise();
 
 
 function stress(){
-let logDates = [];
-let stressLogged = [];
-    
-    
-    
-function displayDates() {    
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-           let dates = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < dates.length; i++){
-            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
-    }
-        
-
-        }
-    })
-}
-
-displayDates();
+    let logDates = [];
+    let stressLogged = [];
 
 
-function displayStress() {
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-        let stress = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < stress.length; i++){
-            stressLogged.push(stress[i].stress);
-    }
-        
 
-                    
-}});
-}
-
-displayStress();
-
-
-var ctx = $("#stress");
-
-
-var stackedLine = new Chart(ctx, {
- type: 'line',
-    data: {
-    labels: logDates,
-    datasets: [{ 
-        data: [],
-        label: "Stress Total",
-        borderColor: '#ADAABF',
-        backgroundColor: '#fff',
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responseive: true,
-    legend: {
-        display: false
-    },
-    title: {
-      display: true,
-      text: 'Stress Rating per Day',
-      fontSize: 18,
-    },
-      scales: {
-        xAxes: [{
-            gridLines: {
-                drawOnChartArea: false
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Daily Rating (1-5)',
-                fontSize: 14,
-        
-      },
-            gridLines: {
-                drawOnChartArea: false
+    function displayDates() {    
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
             },
-            ticks: {
-                beginAtZero: true,
-                max: 5,
-                stepSize: 1,
+            success: function(data) {
+                let dates = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < dates.length; i++){
+                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                }
+
+
             }
-        }]
+        })
     }
-  }
-});
-    
-    
 
-function addData(chart, label, color, data) {
-		chart.data.datasets.push({
-	    label: label,
-      backgroundColor: color,
-      data: data
+    displayDates();
+
+
+    function displayStress() {
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
+            },
+            success: function(data) {
+                let stress = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < stress.length; i++){
+                    stressLogged.push(stress[i].stress);
+                }
+
+
+
+            }});
+    }
+
+    displayStress();
+
+
+    var ctx = $("#stress");
+
+
+    var stackedLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: logDates,
+            datasets: [{ 
+                data: [],
+                label: "Stress Total",
+                borderColor: '#ADAABF',
+                backgroundColor: '#fff',
+                fill: false
+            }
+                      ]
+        },
+        options: {
+            responseive: true,
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Stress Rating per Day',
+                fontSize: 18,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Daily Rating (1-5)',
+                        fontSize: 14,
+
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 5,
+                        stepSize: 1,
+                    }
+                }]
+            }
+        }
     });
-    chart.update();
-}
 
-// inserting the new dataset after 3 seconds
-setTimeout(function() {
-	addData(stackedLine, '', '#ADAABF', stressLogged);
-}, 500);
+
+
+    function addData(chart, label, color, data) {
+        chart.data.datasets.push({
+            label: label,
+            backgroundColor: color,
+            data: data
+        });
+        chart.update();
+    }
+
+    // inserting the new dataset after 3 seconds
+    setTimeout(function() {
+        addData(stackedLine, '', '#ADAABF', stressLogged);
+    }, 500);
 }
 
 
@@ -667,124 +667,124 @@ stress();
 
 
 function waterIntake(){
-let logDates = [];
-let waterLogged = [];
-    
-    
-    
-function displayDates() {    
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-           let dates = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < dates.length; i++){
-            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
-    }
-        
-
-        }
-    })
-}
-
-displayDates();
+    let logDates = [];
+    let waterLogged = [];
 
 
-function waterIntake() {
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-        let waterIntake = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < waterIntake.length; i++){
-            waterLogged.push(waterIntake[i].waterIntake);
-    }
-        
 
-                    
-}});
-}
-
-waterIntake();
-
-
-var ctx = $("#waterIntake");
-
-
-var stackedLine = new Chart(ctx, {
- type: 'line',
-    data: {
-    labels: logDates,
-    datasets: [{ 
-        data: [],
-        label: "Water Intake Total",
-        borderColor: '#C0E8F9',
-        backgroundColor: '#fff',
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responseive: true,
-    legend: {
-        display: false
-    },
-    title: {
-      display: true,
-      text: 'Water Intake per Day',
-      fontSize: 18,
-    },
-      scales: {
-        xAxes: [{
-            gridLines: {
-                drawOnChartArea: false
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Water (oz)',
-                fontSize: 14,
-        
-      },
-            gridLines: {
-                drawOnChartArea: false
+    function displayDates() {    
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
             },
-            ticks: {
-                beginAtZero: true,
-                max: 80,
-                stepSize: 16,
-            }
-        }]
-    }
-  }
-}); 
- 
-    
-    
-function addData(chart, label, color, data) {
-		chart.data.datasets.push({
-	    label: label,
-      backgroundColor: color,
-      data: data
-    });
-    chart.update();
-}
+            success: function(data) {
+                let dates = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < dates.length; i++){
+                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                }
 
-// inserting the new dataset after 3 seconds
-setTimeout(function() {
-	addData(stackedLine, '', '#C0E8F9', waterLogged);
-}, 500);
+
+            }
+        })
+    }
+
+    displayDates();
+
+
+    function waterIntake() {
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
+            },
+            success: function(data) {
+                let waterIntake = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < waterIntake.length; i++){
+                    waterLogged.push(waterIntake[i].waterIntake);
+                }
+
+
+
+            }});
+    }
+
+    waterIntake();
+
+
+    var ctx = $("#waterIntake");
+
+
+    var stackedLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: logDates,
+            datasets: [{ 
+                data: [],
+                label: "Water Intake Total",
+                borderColor: '#C0E8F9',
+                backgroundColor: '#fff',
+                fill: false
+            }
+                      ]
+        },
+        options: {
+            responseive: true,
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Water Intake per Day',
+                fontSize: 18,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Water (oz)',
+                        fontSize: 14,
+
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 80,
+                        stepSize: 16,
+                    }
+                }]
+            }
+        }
+    }); 
+
+
+
+    function addData(chart, label, color, data) {
+        chart.data.datasets.push({
+            label: label,
+            backgroundColor: color,
+            data: data
+        });
+        chart.update();
+    }
+
+    // inserting the new dataset after 3 seconds
+    setTimeout(function() {
+        addData(stackedLine, '', '#C0E8F9', waterLogged);
+    }, 500);
 
 }
 
@@ -801,125 +801,136 @@ waterIntake();
 
 
 function socialSupport(){
-let logDates = [];
-let socialLogged = [];
-
-    
-    
-    
-function displayDates() {    
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-           let dates = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < dates.length; i++){
-            logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
-    }
-        
-
-        }
-    })
-}
-
-displayDates();
+    let logDates = [];
+    let socialLogged = [];
 
 
-function socialSupport() {
-    $.ajax({
-        url: '/logs/user/'+localStorage.getItem('username'),
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            authorization: 'Bearer '+localStorage.getItem('authToken')
-        },
-        success: function(data) {
-        let socialSupport = data.logs.sort(function(a,b){
-            return new Date(a.date) - new Date(b.date)})
-            for (var i = 0; i < socialSupport.length; i++){
-            socialLogged.push(socialSupport[i].communityFeeling);
-    }
-        
-
-                    
-}});
-}
-
-socialSupport();
 
 
-var ctx = $("#socialSupport");
-
-
-var stackedLine = new Chart(ctx, {
- type: 'line',
-    data: {
-    labels: logDates,
-    datasets: [{ 
-        data: [],
-        label: "Social Support Rating",
-        borderColor: '#FE5F55',
-        backgroundColor: '#fff',
-        fill: false
-      }
-    ]
-  },
-  options: {
-    responseive: true,
-    legend: {
-        display: false
-    },
-    title: {
-      display: true,
-      text: 'Social Support Rating per Day',
-      fontSize: 18,
-    },
-      scales: {
-        xAxes: [{
-            gridLines: {
-                drawOnChartArea: false
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-                labelString: 'Daily Rating (1-5)',
-                fontSize: 14,
-        
-      },
-            gridLines: {
-                drawOnChartArea: false
+    function displayDates() {    
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
             },
-            ticks: {
-                beginAtZero: true,
-                max: 5,
-                stepSize: 1,
+            success: function(data) {
+                let dates = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < dates.length; i++){
+                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                }
+
+
             }
-        }]
+        })
     }
-  }
-});
+
+    displayDates();
 
 
-function addData(chart, label, color, data) {
-		chart.data.datasets.push({
-	    label: label,
-      backgroundColor: color,
-      data: data
+    function socialSupport() {
+        $.ajax({
+            url: '/logs/user/'+localStorage.getItem('username'),
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                authorization: 'Bearer '+localStorage.getItem('authToken')
+            },
+            success: function(data) {
+                let socialSupport = data.logs.sort(function(a,b){
+                    return new Date(a.date) - new Date(b.date)})
+                for (var i = 0; i < socialSupport.length; i++){
+                    socialLogged.push(socialSupport[i].communityFeeling);
+                }
+
+
+
+            }});
+    }
+
+    socialSupport();
+
+
+    var ctx = $("#socialSupport");
+
+
+    var stackedLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: logDates,
+            datasets: [{ 
+                data: [],
+                label: "Social Support Rating",
+                borderColor: '#FE5F55',
+                backgroundColor: '#fff',
+                fill: false
+            }
+                      ]
+        },
+        options: {
+            responseive: true,
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Social Support Rating per Day',
+                fontSize: 18,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Daily Rating (1-5)',
+                        fontSize: 14,
+
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 5,
+                        stepSize: 1,
+                    }
+                }]
+            }
+        }
     });
-    chart.update();
-}
 
-// inserting the new dataset after 3 seconds
-setTimeout(function() {
-	addData(stackedLine, '', '#8E3B46', socialLogged);
-}, 500);
-    
+
+    function addData(chart, label, color, data) {
+        chart.data.datasets.push({
+            label: label,
+            backgroundColor: color,
+            data: data
+        });
+        chart.update();
+    }
+
+    // inserting the new dataset after 3 seconds
+    setTimeout(function() {
+        addData(stackedLine, '', '#505168', socialLogged);
+    }, 500);
+
 }
 
 socialSupport();
+
+
+
+
+
+
+
+
+
+
+
