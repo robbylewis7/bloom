@@ -48,6 +48,7 @@ fieldset{
     font-size: 12px;
     border-radius: 30px;
     background: none;
+    margin-bottom: 5%;
     color: #718689;
     border: 2px solid #F4AE93;
 }
@@ -64,6 +65,7 @@ input {
     border: none;
     border-bottom: 1px solid #F4AE93;
     margin-left: 5px;
+    width: 50%;
 }
 
 #lowerForm{

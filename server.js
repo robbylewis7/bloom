@@ -19,13 +19,13 @@ const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
-    if (req.method === 'OPTIONS') {
-        return res.send(204);
-    }
-    next();
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+    return res.send(204);
+  }
+  next();
 });
 
 passport.use(localStrategy);
@@ -44,229 +44,229 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 
 
 app.get('/', (req, res) => {
-    res.status(200);
-    res.sendFile('index.html', { root: './public' });
+  res.status(200);
+  res.sendFile('index.html', { root: './public' });
 });
 
 app.get('/all', (req, res) => {
-    res.status(200);
-    res.sendFile('all.html', { root: './public' });
+  res.status(200);
+  res.sendFile('all.html', { root: './public' });
 });
 
 app.get('/dashboard', (req, res) => {
-    res.status(200);
-    res.sendFile('dashboard.html', { root: './public' });
+  res.status(200);
+  res.sendFile('dashboard.html', { root: './public' });
 });
 
 app.get('/logs', jwtAuth, (req, res) => {
-    Log.find({user: req.user.username})
+      Log.find({user: req.user.username})
         .sort({ date: -1 })
         .then(logs => {
-        res.status(200).json({
+            res.status(200).json({
             logs: logs.map(log => log.serialize())
-        });
+      });
     })
-        .catch(err => {
-        console.error(err);
-        res.status(500).json({ message: 'Internal server error' });
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
     });
 });
-
-
+        
+        
 app.get('/logs/:id', jwtAuth, (req, res) => {
-    Log.findById(req.params.id)
-        .then(log => res.json(log.serialize()))
-        .catch(err => {
-        console.error(err);
-        res.status(500).json({ message: 'Internal server error' });
+  Log.findById(req.params.id)
+    .then(log => res.json(log.serialize()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
     });
 });
 
 app.get('/logs/user/:user', (req, res) => { 
     Log.find({user: req.params.user})
-        .sort({ date: -1 })
+    .sort({ date: -1 })
         .then(logs => {
-        res.status(200).json({
-            logs: logs.map(log => log.serialize())
+              res.status(200).json({
+              logs: logs.map(log => log.serialize())
 
         });
 
-    })
+      })
         .catch(err => { 
         console.error(err); res.status(500).json({ message: 'Internal server error' }); }); });
 
 
 app.post('/logs', jwtAuth, (req, res) => {
 
-    const requiredFields = ['date', 'sleepStartHr', 'sleepStartMin', 'sleepEndHr', 'sleepEndMin', 'user'];
-    for (let i = 0; i < requiredFields.length; i++) {
-        const field = requiredFields[i];
-        if (!(field in req.body)) {
-            const message = `Missing \`${field}\` in request body`;
-            console.error(message);
-            return res.status(400).send(message);
-        }
+  const requiredFields = ['date', 'sleepStartHr', 'sleepStartMin', 'sleepEndHr', 'sleepEndMin', 'user'];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`;
+      console.error(message);
+      return res.status(400).send(message);
     }
+  }
 
-    Log.find({date: req.body.date, user: req.user.username}).then(log => {
-        if (log.length !== 0) {
-            return res.status(400).send('A log with this date already exists');
-        } else {
-            Log
-                .create({
-                date: req.body.date,
-                stress: req.body.stress,
-                gratitude: req.body.gratitude,
-                energy: req.body.energy,
-                communityFeeling: req.body.communityFeeling,
-                waterIntake: req.body.waterIntake,
-                cleanEating: req.body.cleanEating,
-                exercise: req.body.exercise,
-                sleepStartHr: req.body.sleepStartHr,
-                sleepStartMin: req.body.sleepStartMin,
-                sleepEndHr: req.body.sleepEndHr,
-                sleepEndMin: req.body.sleepEndMin,
-                user: req.user.username
-            })
-                .then(log => res.status(201).json(log.serialize()))
-                .catch(err => {
-                console.error(err);
-                res.status(500).json({ message: 'Internal server error' });
-            });
-        }});
+Log.find({date: req.body.date, user: req.user.username}).then(log => {
+    if (log.length !== 0) {
+      return res.status(400).send('A log with this date already exists');
+    } else {
+      Log
+        .create({
+            date: req.body.date,
+            stress: req.body.stress,
+            gratitude: req.body.gratitude,
+            energy: req.body.energy,
+            communityFeeling: req.body.communityFeeling,
+            waterIntake: req.body.waterIntake,
+            cleanEating: req.body.cleanEating,
+            exercise: req.body.exercise,
+            sleepStartHr: req.body.sleepStartHr,
+            sleepStartMin: req.body.sleepStartMin,
+            sleepEndHr: req.body.sleepEndHr,
+            sleepEndMin: req.body.sleepEndMin,
+            user: req.user.username
+      })
+        .then(log => res.status(201).json(log.serialize()))
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({ message: 'Internal server error' });
+       });
+    }});
 });
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
 app.put('/logs/:id', (req, res) => {
-    if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-        const message =
-              `Request path id (${req.params.id}) and request body id ` +
-              `(${req.body.id}) must match`;
-        console.error(message);
-        return res.status(400).json({ message: message });
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    const message =
+      `Request path id (${req.params.id}) and request body id ` +
+      `(${req.body.id}) must match`;
+    console.error(message);
+    return res.status(400).json({ message: message });
+  }
+     const requiredFields = ['date'];
+        let message;
+        let missingError = false;
+
+  requiredFields.forEach(field => {
+    if (!(req.body[field])) {
+      message = `Missing \`${field}\` value in request body`;
+      console.error(message);
+      missingError = true;
+      return;
     }
-    const requiredFields = ['date'];
-    let message;
-    let missingError = false;
+  });
 
-    requiredFields.forEach(field => {
-        if (!(req.body[field])) {
-            message = `Missing \`${field}\` value in request body`;
-            console.error(message);
-            missingError = true;
-            return;
-        }
-    });
+  if (missingError) {
+    return res.status(400).send(message);
+  }
 
-    if (missingError) {
-        return res.status(400).send(message);
+  const toUpdate = {};
+  const updateableFields = [
+    'date',
+    'sleepStartHr',
+    'sleepStartMin',
+    'sleepEndHr',
+    'sleepEndMin',
+    'stress',
+    'gratitude',
+    'energy',
+    'communityFeeling',
+    'waterIntake',
+    'cleanEating',
+    'exercise'
+  ];
+      
+  updateableFields.forEach(field => {
+    if (field in req.body) {
+      toUpdate[field] = req.body[field];
     }
-
-    const toUpdate = {};
-    const updateableFields = [
-        'date',
-        'sleepStartHr',
-        'sleepStartMin',
-        'sleepEndHr',
-        'sleepEndMin',
-        'stress',
-        'gratitude',
-        'energy',
-        'communityFeeling',
-        'waterIntake',
-        'cleanEating',
-        'exercise'
-    ];
-
-    updateableFields.forEach(field => {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
-        }
-    });
-    Log.findByIdAndUpdate(req.params.id, { $set: toUpdate })
-        .then(log => res.status(204).end())
-        .catch(err => {
-        console.error(err);
-        res.status(500).json({ message: 'Internal server error' });
+  });
+      Log.findByIdAndUpdate(req.params.id, { $set: toUpdate })
+    .then(log => res.status(204).end())
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
     });
 });
-
-
-
-
+    
+    
+    
+    
 app.delete('/logs/:id', (req, res) => {
-    Log.findByIdAndRemove(req.params.id)
-        .then(log => res.status(204).end())
-        .catch(err => {
-        console.error(err);
-        res.status(500).json({ message: 'Internal server error' });
+  Log.findByIdAndRemove(req.params.id)
+    .then(log => res.status(204).end())
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
     });
 });
 
 app.use('*', function(req, res) {
-    res.status(404).json({ message: 'Not Found' });
+  res.status(404).json({ message: 'Not Found' });
 });
 
-
-
-
-
+    
+    
+    
+    
 //////////////////
 //Server
 //////////////////
+    
+    
+    
 
-
-
-
-
+    
 let server;
 
 function runServer(databaseUrl, port = PORT) {
-    return new Promise((resolve, reject) => {
-        mongoose.set('useCreateIndex', true);
-        mongoose.connect(
-            'mongodb://127.0.0.1/bloom',
-            { useNewUrlParser: true },
-            err => {
-                if (err) {
-                    return reject(err);
-                }
-                server = app
-                    .listen(port, () => {
-                    console.log(`Your app is listening on port ${port}`);
-                    resolve();
-                })
-                    .on('error', err => {
-                    mongoose.disconnect();
-                    reject(err);
-                });
-            }
-        );
-    });
+  return new Promise((resolve, reject) => {
+    mongoose.set('useCreateIndex', true);
+    mongoose.connect(
+      databaseUrl,
+    { useNewUrlParser: true },
+      err => {
+        if (err) {
+          return reject(err);
+        }
+        server = app
+          .listen(port, () => {
+            console.log(`Your app is listening on port ${port}`);
+            resolve();
+          })
+          .on('error', err => {
+            mongoose.disconnect();
+            reject(err);
+          });
+      }
+    );
+  });
 }
 
 function closeServer() {
-    return mongoose.disconnect().then(() => {
-        return new Promise((resolve, reject) => {
-            console.log('Closing server');
-            server.close(err => {
-                if (err) {
-                    return reject(err);
-                }
-                resolve();
-            });
-        });
+  return mongoose.disconnect().then(() => {
+    return new Promise((resolve, reject) => {
+      console.log('Closing server');
+      server.close(err => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
     });
+  });
 }
 
 
 
 if (require.main === module) {
-    runServer(DATABASE_URL).catch(err => console.error(err));
+  runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
 module.exports = { app, server, runServer, closeServer };
