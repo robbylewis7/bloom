@@ -57,7 +57,7 @@ The app is hosted on Heroku: <a href = "https://bloomappthinkful.herokuapp.com">
 ![A screenshot of Bloom's new log](screenshots/NewLog.png)
 
 
-<h2>View All / Dashbard Page</h2>
+<h2>View All / Dashboard Page</h2>
 
 
 
