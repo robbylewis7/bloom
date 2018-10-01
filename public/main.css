@@ -16,6 +16,16 @@ fieldset{
     margin-left: 20px;
 }
 
+#menu, #close{
+    height: 50px;
+    width: 50px;
+    float: right;
+}
+
+#mobileMenu{
+    display: none;
+}
+
 header{
     width: 100%;
     height: 25%;
@@ -45,6 +55,7 @@ header a{
 header a:hover{
     font-weight: bold;
     border-bottom: 2px solid white;
+    cursor: pointer;
 }
 
 
@@ -68,6 +79,7 @@ header a:hover{
     width: 70px;
     height: 35px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 body{
@@ -368,6 +380,14 @@ body {
     #logout{
         margin-right: 0px;
     } 
+    
+    .nav, #close, #subMobileMenu{
+        display: none;
+    }
+    
+    #mobileMenu{
+        display: inline;
+    }
 }
 
 

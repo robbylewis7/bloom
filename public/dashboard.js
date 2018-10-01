@@ -930,6 +930,76 @@ socialSupport();
 
 
 
+var ctx = $("#example");
+
+
+    var stackedLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["09/12/2018", "09/13/2018", "09/14/2018"],
+            datasets: [{ 
+                data: [],
+                label: "Social Support Rating",
+                borderColor: '#FE5F55',
+                backgroundColor: '#fff',
+                fill: false
+            }
+                      ]
+        },
+        options: {
+            responseive: true,
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Stress Rating per Day',
+                fontSize: 18,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Daily Rating (1-5)',
+                        fontSize: 14,
+
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        max: 5,
+                        stepSize: 1,
+                    }
+                }]
+            }
+        }
+
+   });
+
+    function addData(chart, label, color, data) {
+        chart.data.datasets.push({
+            label: label,
+            backgroundColor: color,
+            data: data
+        });
+        chart.update();
+    }
+
+    // inserting the new dataset after 3 seconds
+    setTimeout(function() {
+        addData(stackedLine, '', '#18689', [2,3,4]);
+    }, 1000);
+
+ 
+
+
 
 
 

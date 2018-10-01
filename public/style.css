@@ -160,17 +160,31 @@ input {
     align-items: center;
 }
 
+.underline{
+    border-bottom: 1px solid white;
+}
+
+.smallerFont{
+    font-size: 14px;
+    
+}
+
 #thirdSection h2{
     font-size: 80px;
     padding: 60px 0;
 }
 
 #thirdSection p{
-    font-size: 20px;
-    padding: 20px;
+    font-size: 18px;
+    padding: 14px;
     text-align: left;
 }
 
+#exampleArea{
+    max-width: 400px;
+    margin: auto;
+    padding: 40px;
+}
 
 
 
@@ -301,7 +315,11 @@ input {
         border: 2px solid #F4AE93;
     }
 
-
+    #thirdSection{
+        height: 760px;
+        color: white;
+        display: block;
+    }
 
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang = "en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
@@ -13,14 +13,14 @@
     <body>
         <header>
             <section class="banner">
-                <div class="header-content">
+                <div class="header-content" aria-live="assertive">
                     <div class = "content">
 
                         <h1 class="text-center xs-w12">Bloom</h1>
                         <h3>Take the time to evaluate each day.</h3>
                     </div>
-                    <button type = "button" class = "button" id = "signup" class = "buttonsNew">Sign Up</button>
-                    <button type = "button" class = "button" id = "login" class = "buttonsNew">Login</button>
+                    <button type = "button" class = "button" id = "signup" class = "buttonsNew" role = "button">Sign Up</button>
+                    <button type = "button" class = "button" id = "login" class = "buttonsNew" role = "button">Login</button>
 
                     <div id = "forms">
                         <fieldset id = "signupForm">
@@ -41,7 +41,7 @@
                                 <label for "password">Password:</label>
                                 <input type="password" name="password" id="password" placeholder="Must be 8 characters long"required><br>
                                 <div id = "lowerForm">
-                                    <button type="submit" class = "buttons">Sign Up</button>
+                                    <button type="submit" class = "buttons" role = "button">Sign Up</button>
                                     <p>Already registered? <a href = "#" id = "loginSwitch">Login</a></p>
                                 </div>
                             </form>
@@ -68,7 +68,7 @@
 
                 <div id = "middleContent">
 
-                    <h2>Bloom allows you to see patterns that you otherwise may not have noticed.</h2>
+                    <h2>Bloom allows you to see patterns in your life that you otherwise may not have noticed.</h2>
 
 
                 </div>
@@ -95,15 +95,20 @@
                 <div id = "thirdSection">
                     <h2>What to know:</h2>
                     <div id = "rules">
-                        <p>Track areas in your life like: sleep totals, water intake, and cleanliness of eating (just to name a few)</p>
-                        <p>Most categories are based on a 1-5 scale with 1 being the equivalent to "Poor" while 5 being "Oustanding"</p>
-                        <p>Use the Dashboard page to graphically view your logs per category to spot trends and insights into your lifestyle.</p>
-                        <canvas id="myChart" class = "canvases"></canvas>
+                        <p>Track areas in your life like: <span class = "underline"> sleep totals</span>, <span class = "underline">water intake</span>, and <span class = "underline">cleanliness of eating</span> (just to name a few)</p>
+                        <p><span class = "underline">Most categories are based on a 1-5 scale</span> : 5 is equivalent to "Excellent"  &  1 is equivalent to "Poor"</p>
+                        <p>Use the Dashboard page to graphically view your logs per category to spot trends and insights into your lifestyle <span class = "smallerFont">(example below)</span></p>
+                        <div id = "exampleArea">
+                        <canvas id="example" class = "canvases"></canvas>
+                            </div>
                     </div>
                 </div>
             </section>
         </header>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+        <script src="dashboard.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
         <script src="index.js"></script>
     </body>

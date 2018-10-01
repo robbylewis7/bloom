@@ -12,7 +12,16 @@ header{
     align-items: flex-start;
 }
 
+#menu, #close{
+    height: 50px;
+    width: 50px;
+    float: right;
+    border: none;
+}
 
+#mobileMenu{
+    display: none;
+}
 
 header li{
     list-style-type: none;
@@ -30,8 +39,8 @@ header a{
 header a:hover{
     font-weight: bold;
     border-bottom: 2px solid white;
+    cursor: pointer;
 }
-
 
 
 
@@ -53,6 +62,7 @@ header a:hover{
     width: 70px;
     height: 35px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .buttons{
@@ -68,6 +78,7 @@ header a:hover{
 .buttons:hover{
     background:white;
     color: #FE9985;
+    cursor: pointer;
 }
 
 body, html{
@@ -169,12 +180,17 @@ body {
 }
 
 
+
 @media only screen and (max-width: 768px) {
     header li{
         display: block;
         padding:2px 0px;
         font-size: 14px;
 
+    }
+
+    header{
+        height: 30%;
     }
 
     .nav{
@@ -187,8 +203,15 @@ body {
 
     #logout{
         margin-right: 0px;
-    } 
+    }
+    .nav, #close, #subMobileMenu{
+        display: none;
+    }
+    
+    #mobileMenu{
+        display: inline;
+    }
+    
 
 }
-
 

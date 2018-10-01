@@ -2,8 +2,17 @@
     box-sizing: border-box;
     font-family: 'Cabin', sans-serif;
     color: white;
+}
 
+#menu, #close{
+    height: 50px;
+    width: 50px;
+    float: right;
+    border: none;
+}
 
+#mobileMenu{
+    display: none;
 }
 
 .logo{
@@ -38,7 +47,9 @@ header a{
 header a:hover{
     font-weight: bold;
     border-bottom: 2px solid white;
+    cursor: pointer;
 }
+
 
 
 #logo{
@@ -58,6 +69,7 @@ header a:hover{
     width: 70px;
     height: 35px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .buttons{
@@ -103,7 +115,7 @@ canvas{
     }
 
     header{
-        height: 20%;
+        height: 30%;
     }
 
     .nav{
@@ -113,10 +125,19 @@ canvas{
     .logo{
         display: none;
     }
-    
+
     #logout{
         margin-right: 0px;
-} 
+    }
+    .nav, #close, #subMobileMenu{
+        display: none;
+    }
+    
+    #mobileMenu{
+        display: inline;
+    }
+    
+
 }
 
 

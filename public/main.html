@@ -1,4 +1,4 @@
-<html>
+<html lang = "en">
     <head>
         <title>Bloom</title>
         <meta name="description" content="">
@@ -12,52 +12,70 @@
 
 
     <body>  
-        <header role="banner">
 
+        <header role="banner" class = "header">
             <div id = "logoArea">
                 <h1><span class="logo">Bloom</span></h1>
                 <img src = "sproutlogo.png" id = "logo">
             </div>
-
             <div role="nav" class="nav">
-                <div id = "menu">
-                    <ul>
+                <div id = "subMenu">
+                    <ul class = "menu">
                         <li>
-                            <a href="/main.html" id = "home">Home</a>
+                            <a href="/main.html" >Home</a>
                         </li>
                         <li>
                             <a href="/all.html" >All Logs</a>
                         </li>
 
                         <li>
-                            <a href="/dashboard.html" >Dashboard</a>
+                            <a href="/dashboard.html" id = "dashboard">Dashboard</a>
                         </li>
                     </ul>
-                    <button type="button" class = "buttons" id = "logout">Logout</button>
+                    <button type="button" class = "buttons" id = "logout" role = "button">Logout</button>
                 </div>
             </div>
+            
+            <div role="nav" class="nav" id = "mobileMenu">
+                <a href = "#"><img src = "menu.png" id = "menu" alt = "Drop-down menu"></a>
+                <a href = "#"><img src = "close.png" id = "close" alt = "Cancel drop-down menu"></a>
+                <div id = "subMobileMenu">
+                    <ul class = "menu">
+                        <li>
+                            <a href="/main.html" >Home</a>
+                        </li>
+                        <li>
+                            <a href="/all.html" >All Logs</a>
+                        </li>
 
+                        <li>
+                            <a href="/dashboard.html" id = "dashboard">Dashboard</a>
+                        </li>
+                    </ul>
+                    <button type="button" class = "buttons" id = "logout" role = "button">Logout</button>
+                </div>
+            </div>
 
         </header>
 
 
 
-        <div class = "searchForDate">
+        <div class = "searchForDate" aria-live="assertive">
 
             <fieldset id = "dateSearch">
                 <legend id = "instructions">Search for a previous day's log <span id = "orSeperator">or</span> create a new one:</legend>
                 <form action="#" id = "js-search-form">
                     <label for="query"></label>
                     <input type="date" name="dateInput" id="search-date" required>
-                    <button type="submit" class = "buttons">Search</button>
-                    <button type="button" class = "buttons" id = "cancel">Cancel</button>
+                    <button type="submit" class = "buttons" role = "button">Search</button>
+                    <button type="button" class = "buttons" id = "cancel" role = "button">Cancel</button>
                 </form>
             </fieldset>
 
             <div id = "startSection">
 
-                <button type = "button" id = "searchNew" class = "buttonsNew"><img src = "search.png"></button>
-                <button type = "button" id = "createNew" class = "buttonsNew"><img src = "create.png"></button>
+                <button type = "button" id = "searchNew" class = "buttonsNew" role = "button"><img src = "search.png" alt = "Search for a log"></button>
+                <button type = "button" id = "createNew" class = "buttonsNew" role = "button"><img src = "create.png" alt = "Create a log"></button>
 
 
             </div>
@@ -66,11 +84,11 @@
 
         <div id = "logFormation">
 
-            <div id ="editLog">
+            <div id ="editLog" aria-live="assertive">
 
             </div>
 
-            <div id = "todaysLog">
+            <div id = "todaysLog" aria-live="assertive">
 
             </div>
 
@@ -254,8 +272,8 @@
 
 
                             <div class="form-buttons-div">
-                                <input type="submit" name="save-button" value="Save" class="buttons js-logSaveButton">
-                                <button type="button" name="cancel-button" class="buttons js-logCancelButton">Cancel</button>
+                                <input type="submit" name="save-button" value="Save" class="buttons js-logSaveButton" role = "button">
+                                <button type="button" name="cancel-button" class="buttons js-logCancelButton" role = "button">Cancel</button>
                             </div>
                             <p id = "rankingScore">5 = Excellent  |  1 = Poor </p>
 

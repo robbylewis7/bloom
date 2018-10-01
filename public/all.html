@@ -1,4 +1,4 @@
-<html>
+<html lang = "en">
     <head>
         <title>Bloom</title>
         <meta name="description" content="">
@@ -16,22 +16,42 @@
                 <h1><span class="logo">Bloom</span></h1>
                 <img src = "sproutlogo.png" id = "logo">
             </div>
-
             <div role="nav" class="nav">
-                <ul class = "menu">
-                    <li>
-                        <a href="/main.html" >Home</a>
-                    </li>
-                    <li>
-                        <a href="/all.html" >All Logs</a>
-                    </li>
+                <div id = "subMenu">
+                    <ul class = "menu">
+                        <li>
+                            <a href="/main.html" >Home</a>
+                        </li>
+                        <li>
+                            <a href="/all.html" >All Logs</a>
+                        </li>
 
-                    <li>
-                        <a href="/dashboard.html" id = "dashboard">Dashboard</a>
-                    </li>
-                </ul>
-                <button type="button" class = "buttons" id = "logout">Logout</button>
+                        <li>
+                            <a href="/dashboard.html" id = "dashboard">Dashboard</a>
+                        </li>
+                    </ul>
+                    <button type="button" class = "buttons" id = "logout" role = "button">Logout</button>
+                </div>
+            </div>
+            
+            <div role="nav" class="nav" id = "mobileMenu">
+                <a href = "#"><img src = "menu.png" id = "menu" alt = "Drop-down menu"></a>
+                <a href = "#"><img src = "close.png" id = "close" alt = "Cancel drop-down menu"></a>
+                <div id = "subMobileMenu">
+                    <ul class = "menu">
+                        <li>
+                            <a href="/main.html" >Home</a>
+                        </li>
+                        <li>
+                            <a href="/all.html" >All Logs</a>
+                        </li>
 
+                        <li>
+                            <a href="/dashboard.html" id = "dashboard">Dashboard</a>
+                        </li>
+                    </ul>
+                    <button type="button" class = "buttons" id = "logout" role = "button">Logout</button>
+                </div>
             </div>
 
         </header>

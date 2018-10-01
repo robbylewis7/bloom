@@ -9,9 +9,8 @@ $('#js-search-form').hide();
 $('#signupForm').hide()
 $('#loginForm').hide()
 
-
+//Shows signup form
 $('.header-content').on('click', '#signup', function(){
-    console.log('cl');
     $('#signupForm').show();
     $('.content').hide();
     $('#signup').hide()
@@ -19,8 +18,8 @@ $('.header-content').on('click', '#signup', function(){
 
 });
 
+//Shows login form
 $('.header-content').on('click', '#login', function(){
-    console.log('cl');
     $('#loginForm').show();
     $('.content').hide();
     $('#signup').hide()
@@ -28,6 +27,7 @@ $('.header-content').on('click', '#login', function(){
 
 });
 
+//Shows search form for logs
 $('.searchForDate').on('click', '#searchNew', function(){
     $('#js-search-form').show();
     $('#startSection').hide();
@@ -36,6 +36,7 @@ $('.searchForDate').on('click', '#searchNew', function(){
 
 });
 
+//Shows create new log form
 $('.searchForDate').on('click', '#createNew', function(){
     $('#log-create-form').show();
     $('.searchForDate').hide();
@@ -44,54 +45,64 @@ $('.searchForDate').on('click', '#createNew', function(){
 
 });
 
+//Cancels out of log search
 $('#log-create-form').on('click', '.js-logCancelButton', function(){
     $('.searchForDate').show();
     $('#log-create-form').hide();
 
 });
 
+//Switches between login and signup
 $('#loginSwitch').on('click', function(){
     $('#loginForm').show();
     $('#signupForm').hide();
 
 })
 
+//Switches between signup and login
 $('#signupSwitch').on('click', function(){
     $('#loginForm').hide();
     $('#signupForm').show();
 
 })
 
+//Cancel button
 $('#cancel').on('click', function(){
     location.reload();
 
 })
 
+//Cancel button
 $('.js-logCancelButton').on('click', function(){
     location.reload();
 
 }) 
 
+//Cancel button
 $('#logFormation').on('click', '#cancelButton', function(){
     location.reload();
 
 })
 
-$('#todaysLog').on('click', '.logSearchButtons', function(){
+//Cancel button
+$('#todaysLog').on('click', '#cancelButton', function(){
     location.reload();
 })
 
-//$('#menuDropdown').on('click', function(){
-//    $('#menuDropdown').hide();
-//    $('#menu').show();
-//    $('#menuCancel').show();
-//})
-//
-//$('#menuCancel').on('click', function(){
-//    $('#menuCancel').hide();
-//    $('#menu').hide();
-//    $('#menuDropdown').show();
-//})
+//Mobile menu toggling
+$('#menu').on('click', function(){
+$('#close').show();
+$('#menu').hide();
+$('#subMobileMenu').show();
+});
+
+$('#close').on('click', function(){
+$('#menu').show();
+$('#close').hide();
+$('#subMobileMenu').hide();
+});
+
+
 //---------------------------------------------
 //Default to today for new logs
 //---------------------------------------------
@@ -182,7 +193,7 @@ function displayDayLog(){
 <p id = "exercise">Exercise: ${logArray[0].exercise}</p>
 <p id = "community">Strength of Community: ${logArray[0].communityFeeling}</p>
 <button type= "button" class = "logSearchButtons" id = "editButton">Edit</button>
-<button type = "button" class = "logSearchButtons">Cancel</button>
+<button type = "button" class = "logSearchButtons" id = "cancelButton">Cancel</button>
 </div>
 `
                     $('#todaysLog').html(today);
@@ -243,6 +254,7 @@ function postNewLog(logData) {
         data: JSON.stringify(logData),
         success: function(){
             alert('Item has been saved!');
+            window.location.href = '/all.html';
         }
     };
 
@@ -470,7 +482,6 @@ $('#todaysLog').on('click', '#editButton', function(){
             $('#sleepend-hr').val(logArray[0].sleepEndHr); 
             $('#sleepend-min').val(logArray[0].sleepEndMin); 
             $('#id').val(logArray[0].id);
-
         }
     });
 });
@@ -509,6 +520,7 @@ function putEditedLog(logEditData) {
         success: function(){
             alert('Your log has been updated!');
             $('#createLog').hide();
+            location.reload();
 
         }
     }
@@ -632,6 +644,7 @@ function listenForSignUpButton() {
 
 
 
+//Putting it all together
 listenForLogin();
 listenForSignUpButton();
 listenForLogoutButton();
