@@ -9,7 +9,7 @@ Once you have a few logs, take advantage of the dashboards page which will graph
 # Screenshots from Bloom
 
 
-Bloom's landing page
+<h2>Bloom's landing page</h2>
 
 
 ![A screenshot of Bloom's landing page](screenshots/Landing.png)
