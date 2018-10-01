@@ -1,7 +1,7 @@
 <html lang = "en">
     <head>
         <title>Bloom</title>
-        <meta name="description" content="">
+        <meta name="description" content="Create a daily log to track various areas of your life.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="dashboard.css">
         <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
@@ -9,82 +9,84 @@
     </head>
 
     <body>  
-
+        <main role = "main">
+            <div id = "username">
+            </div>
         <header role="banner" class = "header">
             <div id = "logoArea">
                 <h1><span class="logo">Bloom</span></h1>
                 <img src = "sproutlogo.png" id = "logo">
             </div>
-            <div role="nav" class="nav">
-                <div id = "subMenu">
-                    <ul class = "menu">
-                        <li>
-                            <a href="/main.html" >Home</a>
-                        </li>
-                        <li>
-                            <a href="/all.html" >All Logs</a>
-                        </li>
+                <div role="nav" class="nav">
+                    <div id = "subMenu">
+                        <ul class = "menu">
+                            <li>
+                                <a href="/main.html" >Home</a>
+                            </li>
+                            <li>
+                                <a href="/all.html" >All Logs</a>
+                            </li>
 
-                        <li>
-                            <a href="/dashboard.html" id = "dashboard">Dashboard</a>
-                        </li>
-                    </ul>
-                    <button type="button" class = "buttons" id = "logout" role = "button">Logout</button>
+                            <li>
+                                <a href="/dashboard.html" id = "dashboard">Dashboard</a>
+                            </li>
+                        </ul>
+                        <button type="button" class = "buttons" id = "logout" role = "button">Logout</button>
+                    </div>
+                </div>
+
+                <div role="nav" class="nav" id = "mobileMenu">
+                    <a href = "#"><img src = "menu.png" id = "menu" alt = "Drop-down menu"></a>
+                    <a href = "#"><img src = "close.png" id = "close" alt = "Cancel drop-down menu"></a>
+                    <div id = "subMobileMenu">
+                        <ul class = "menu">
+                            <li>
+                                <a href="/main.html" >Home</a>
+                            </li>
+                            <li>
+                                <a href="/all.html" >All Logs</a>
+                            </li>
+
+                            <li>
+                                <a href="/dashboard.html" id = "dashboard">Dashboard</a>
+                            </li>
+                        </ul>
+                        <button type="button" class = "buttons" id = "logout" role = "button">Logout</button>
+                    </div>
+                </div>
+
+            </header>
+
+            <div id = "allCharts">
+                <div>
+                    <canvas id="myChart" class = "canvases"></canvas>
+                </div>
+
+                <div>
+                    <canvas id="waterIntake" class = "canvases"></canvas>
+                </div>
+
+                <div>
+                    <canvas id="stress" class = "canvases"></canvas>
+                </div>
+
+                <div>
+                    <canvas id="energy" class = "canvases"></canvas>
+                </div>
+
+                <div>
+                    <canvas id="exercise" class = "canvases"></canvas>
+                </div>
+
+                <div>
+                    <canvas id="cleanEating" class = "canvases"></canvas>
+                </div>
+
+                <div>
+                    <canvas id="socialSupport" class = "canvases"></canvas>
                 </div>
             </div>
-            
-            <div role="nav" class="nav" id = "mobileMenu">
-                <a href = "#"><img src = "menu.png" id = "menu" alt = "Drop-down menu"></a>
-                <a href = "#"><img src = "close.png" id = "close" alt = "Cancel drop-down menu"></a>
-                <div id = "subMobileMenu">
-                    <ul class = "menu">
-                        <li>
-                            <a href="/main.html" >Home</a>
-                        </li>
-                        <li>
-                            <a href="/all.html" >All Logs</a>
-                        </li>
-
-                        <li>
-                            <a href="/dashboard.html" id = "dashboard">Dashboard</a>
-                        </li>
-                    </ul>
-                    <button type="button" class = "buttons" id = "logout" role = "button">Logout</button>
-                </div>
-            </div>
-
-        </header>
-
-        <div id = "allCharts">
-            <div>
-                <canvas id="myChart" class = "canvases"></canvas>
-            </div>
-
-            <div>
-                <canvas id="waterIntake" class = "canvases"></canvas>
-            </div>
-
-            <div>
-                <canvas id="stress" class = "canvases"></canvas>
-            </div>
-
-            <div>
-                <canvas id="energy" class = "canvases"></canvas>
-            </div>
-
-            <div>
-                <canvas id="exercise" class = "canvases"></canvas>
-            </div>
-
-            <div>
-                <canvas id="cleanEating" class = "canvases"></canvas>
-            </div>
-
-            <div>
-                <canvas id="socialSupport" class = "canvases"></canvas>
-            </div>
-        </div>
-
+        </main>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.js"></script>

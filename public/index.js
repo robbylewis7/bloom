@@ -102,6 +102,10 @@ $('#close').hide();
 $('#subMobileMenu').hide();
 });
 
+//Shows username at top
+$('#username').html(`Welcome, ${localStorage.username}!`);
+
+
 
 //---------------------------------------------
 //Default to today for new logs

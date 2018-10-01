@@ -19,6 +19,10 @@
     margin-left: 20px;
 }
 
+#username{
+    text-align: center;
+    background:#FE9985;
+}
 
 header{
     width: 100%;
