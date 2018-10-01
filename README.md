@@ -8,4 +8,4 @@ Once you have a few logs, take advantage of the dashboards page which will graph
 
 #Screenshots from Bloom
 
-![A screenshot of my great app](mygreatapp-screenshot.png)
+![A screenshot of my great app](Landing.png)
