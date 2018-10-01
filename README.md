@@ -7,7 +7,7 @@ Using a log form, you will be able to submit a form for each day. If you get mis
 Once you have a few logs, take advantage of the dashboards page which will graphically display each of your logs by day with the hopes of showing you a trend that you may not have noticed. 
 
 # Live Demo
-The app is hosted on Heroku: <a href = "https://bloomappthinkful.herokuapp.com">Live Demo"</a>
+The app is hosted on Heroku: <a href = "https://bloomappthinkful.herokuapp.com">Live Demo</a>
     
 # Technologies
 <ul>
