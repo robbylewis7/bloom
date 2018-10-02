@@ -557,6 +557,8 @@ function deleteLog(id) {
             $('#createLog').hide();
             $('#search-date').val('');
             $('#instructions').show();
+            window.location.href = '/all.html';
+            
         }
     };
 
@@ -611,7 +613,6 @@ function login(username, password) {
 
 function listenForLogoutButton() {
     $('header').on('click', '#logout', function (event) {
-        console.log('click');
         localStorage.clear(); 
         window.location = '/';
     });
