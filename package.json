@@ -10,6 +10,7 @@
   "author": "Robby Lewis",
   "license": "ISC",
   "dependencies": {
+    "alertifyjs": "^1.11.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai-http": "^4.2.0",
@@ -21,7 +22,8 @@
     "mongoose": "^5.2.13",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
     "chai": "^4.1.2",

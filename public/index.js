@@ -106,7 +106,6 @@ $('#subMobileMenu').hide();
 $('#username').html(`Welcome, ${localStorage.username}!`);
 
 
-
 //---------------------------------------------
 //Default to today for new logs
 //---------------------------------------------
@@ -147,7 +146,7 @@ function displayResults() {
             console.log('data', data)
             let logArray = data.logs.map(function(data){
                 return `<div class = "eachLog">
-<span id = "logDate"><p>${new Date(data.date).getMonth()+1}/${new Date(data.date).getDate()+1}/${new Date(data.date).getFullYear()}</p></span>
+<span id = "logDate"><p>${new Date(data.date).getUTCMonth()+1}/${new Date(data.date).getUTCDate()}/${new Date(data.date).getUTCFullYear()}</p></span>
 <p id = "sleepTotal">Sleep Total: ${data.sleepTotal}</p>
 <p id = "waterIntake">Water Intake: ${data.waterIntake}</p> 
 <p id = "cleanEating">Clean Eating: ${data.cleanEating}</p>
@@ -187,7 +186,8 @@ function displayDayLog(){
                 if (logArray.length > 0){
                     let today = `
 <div id = "logSearch">
-<span id = "logDate"><p>${new Date(logArray[0].date).getMonth()+1}/${new Date(logArray[0].date).getDate()+1}/${new Date(logArray[0].date).getFullYear()}</p></span>
+
+<span id = "logDate"><p>${new Date(logArray[0].date).getUTCMonth()+1}/${new Date(logArray[0].date).getUTCDate()}/${new Date(logArray[0].date).getUTCFullYear()}</p></span>
 <p id = "sleepTotal">Sleep Total: ${logArray[0].sleepTotal}</p>
 <p id = "waterIntake">Water Intake: ${logArray[0].waterIntake}</p> 
 <p id = "cleanEating">Clean Eating: ${logArray[0].cleanEating}</p>
@@ -200,6 +200,7 @@ function displayDayLog(){
 <button type = "button" class = "logSearchButtons" id = "cancelButton">Cancel</button>
 </div>
 `
+                    
                     $('#todaysLog').html(today);
                 } else { 
                     let today = `

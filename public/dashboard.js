@@ -21,7 +21,7 @@ function sleepTotal(){
                 let dates = data.logs.sort(function(a,b){
                     return new Date(a.date) - new Date(b.date)})
                 for (var i = 0; i < dates.length; i++){
-                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`)
+                    logDates.push(`${new Date(dates[i].date).getUTCMonth()+1}/${new Date(dates[i].date).getUTCDate()}/${new Date(dates[i].date).getUTCFullYear()}`);
                 };
             }
         })
@@ -150,7 +150,7 @@ function cleanEating(){
                 let dates = data.logs.sort(function(a,b){
                     return new Date(a.date) - new Date(b.date)})
                 for (var i = 0; i < dates.length; i++){
-                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                    logDates.push(`${new Date(dates[i].date).getUTCMonth()+1}/${new Date(dates[i].date).getUTCDate()}/${new Date(dates[i].date).getUTCFullYear()}`);
                 }
 
 
@@ -228,8 +228,8 @@ function cleanEating(){
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 5,
-                        stepSize: 1,
+//                        max: 5,
+//                        stepSize: 1,
                     }
                 }]
             }
@@ -284,7 +284,7 @@ function energy(){
                 let dates = data.logs.sort(function(a,b){
                     return new Date(a.date) - new Date(b.date)})
                 for (var i = 0; i < dates.length; i++){
-                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                    logDates.push(`${new Date(dates[i].date).getUTCMonth()+1}/${new Date(dates[i].date).getUTCDate()}/${new Date(dates[i].date).getUTCFullYear()}`);
                 }
 
 
@@ -362,8 +362,8 @@ function energy(){
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 5,
-                        stepSize: 1,
+//                        max: 5,
+//                        stepSize: 1,
                     }
                 }]
             }
@@ -418,7 +418,7 @@ function exercise(){
                 let dates = data.logs.sort(function(a,b){
                     return new Date(a.date) - new Date(b.date)})
                 for (var i = 0; i < dates.length; i++){
-                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                    logDates.push(`${new Date(dates[i].date).getUTCMonth()+1}/${new Date(dates[i].date).getUTCDate()}/${new Date(dates[i].date).getUTCFullYear()}`);
                 }
 
 
@@ -496,8 +496,8 @@ function exercise(){
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 5,
-                        stepSize: 1,
+//                        max: 5,
+//                        stepSize: 1,
                     }
                 }]
             }
@@ -550,7 +550,7 @@ function stress(){
                 let dates = data.logs.sort(function(a,b){
                     return new Date(a.date) - new Date(b.date)})
                 for (var i = 0; i < dates.length; i++){
-                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                    logDates.push(`${new Date(dates[i].date).getUTCMonth()+1}/${new Date(dates[i].date).getUTCDate()}/${new Date(dates[i].date).getUTCFullYear()}`);
                 }
 
 
@@ -628,8 +628,8 @@ function stress(){
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 5,
-                        stepSize: 1,
+//                        max: 5,
+//                        stepSize: 1,
                     }
                 }]
             }
@@ -684,7 +684,7 @@ function waterIntake(){
                 let dates = data.logs.sort(function(a,b){
                     return new Date(a.date) - new Date(b.date)})
                 for (var i = 0; i < dates.length; i++){
-                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                    logDates.push(`${new Date(dates[i].date).getUTCMonth()+1}/${new Date(dates[i].date).getUTCDate()}/${new Date(dates[i].date).getUTCFullYear()}`);
                 }
 
 
@@ -762,8 +762,8 @@ function waterIntake(){
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 80,
-                        stepSize: 16,
+//                        max: 80,
+//                        stepSize: 16,
                     }
                 }]
             }
@@ -819,7 +819,7 @@ function socialSupport(){
                 let dates = data.logs.sort(function(a,b){
                     return new Date(a.date) - new Date(b.date)})
                 for (var i = 0; i < dates.length; i++){
-                    logDates.push(`${new Date(dates[i].date).getMonth()+1}/${new Date(dates[i].date).getDate()+1}/${new Date(dates[i].date).getFullYear()}`);
+                    logDates.push(`${new Date(dates[i].date).getUTCMonth()+1}/${new Date(dates[i].date).getUTCDate()}/${new Date(dates[i].date).getUTCFullYear()}`);
                 }
 
 
@@ -897,8 +897,8 @@ function socialSupport(){
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 5,
-                        stepSize: 1,
+//                        max: 5,
+//                        stepSize: 1,
                     }
                 }]
             }
