@@ -96,6 +96,7 @@ app.get('/logs/user/:user', (req, res) => {
         console.error(err); res.status(500).json({ message: 'Internal server error' }); }); });
 
 
+
 app.post('/logs', jwtAuth, (req, res) => {
 
   const requiredFields = ['date', 'sleepStartHr', 'sleepStartMin', 'sleepEndHr', 'sleepEndMin', 'user'];
@@ -136,6 +137,12 @@ Log.find({date: req.body.date, user: req.user.username}).then(log => {
     }});
 });
     
+
+
+
+
+
+
     
     
     

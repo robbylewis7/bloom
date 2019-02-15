@@ -1000,6 +1000,19 @@ var ctx = $("#example");
  
 
 
+// app.get('/logs', (req, res) =>{
+//     Logs.find()
+//     .then( logs =>{
+//         res.status(200).json({
+//             logs: logs.map(log.serialize())
+//         })
+//     })
+//     .catch(err =>{
+//         console.error(err);
+//         res.status(500).json
+//     })
+// })
+
 
 
 
